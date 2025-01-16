@@ -5,6 +5,7 @@ import Faq from "@layouts/Faq";
 import Pricing from "@layouts/Pricing";
 import SeoMeta from "@layouts/SeoMeta";
 import { getRegularPage, getSinglePage } from "@lib/contentParser";
+import Ai from "@layouts/Ai";
 
 // for all regular pages
 const RegularPages = async ({ params }) => {
@@ -32,6 +33,8 @@ const RegularPages = async ({ params }) => {
         <Pricing data={regularPageData} />
       ) : layout === "faq" ? (
         <Faq data={regularPageData} />
+      ) : layout === "ai" ? (
+        <Ai data={regularPageData} />
       ) : (
         <Default data={regularPageData} />
       )}

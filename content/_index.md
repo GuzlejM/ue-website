@@ -1,11 +1,12 @@
 ---
 banner:
-  title: Let us solve your critical website development challenges
-  content: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam nihil enim maxime corporis cumque <br/> totam aliquid nam sint inventore optio modi neque laborum officiis necessitatibus.
+  title: "Experience the Power of AI Assistance"
+  content: "Meet our intelligent AI Assistant that helps you get instant answers, automate tasks, and make smarter decisions. Try it now by clicking the AI Assistant button above!"
   image: /images/banner-art.svg
   button:
-    label: "Contact Us"
-    link: "/contact"
+    label: "Try AI Assistant"
+    link: "/ai"
+    enable: true
 
 # feature
 feature: 

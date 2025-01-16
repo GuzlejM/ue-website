@@ -112,3 +112,41 @@
     @apply font-semibold text-dark;
   }
 }
+
+// AI Assistant
+.ai-input {
+  @apply w-full rounded-md border-border p-4 focus:border-primary focus:ring-transparent;
+  
+  &:focus {
+    @apply outline-none;
+  }
+}
+
+.ai-submit {
+  @apply btn btn-primary ml-auto transition-all duration-200;
+  
+  &:hover {
+    @apply transform -translate-y-1;
+  }
+}
+
+// AI Chat Container
+.chat-messages {
+  @apply overflow-y-auto transition-all duration-300;
+  
+  &:hover {
+    @apply opacity-100;
+  }
+  
+  &::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  &::-webkit-scrollbar-track {
+    @apply rounded-full bg-theme-light;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-border hover:bg-primary/50;
+  }
+}
