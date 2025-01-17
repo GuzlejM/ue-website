@@ -13,7 +13,8 @@ function AgentChat({ data }) {
     setUserInput, 
     isProcessing, 
     thinkingSteps,
-    handleSubmit 
+    handleSubmit,
+    currentStep
   } = useAgent();
 
   const chatContainerRef = useRef(null);
@@ -53,6 +54,7 @@ function AgentChat({ data }) {
                 key={index}
                 thinking={step.text}
                 isProcessing={isProcessing && index === thinkingSteps.length - 1}
+                currentStep={currentStep}
               />
             ))}
 

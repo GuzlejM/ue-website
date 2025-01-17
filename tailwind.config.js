@@ -70,8 +70,9 @@ module.exports = {
       },
       keyframes: {
         progress: {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' }
+          '0%': { transform: 'scaleX(0)', opacity: 0.5 },
+          '50%': { opacity: 1 },
+          '100%': { transform: 'scaleX(1)', opacity: 0.5 }
         },
         bounce: {
           '0%, 100%': {
@@ -83,7 +84,7 @@ module.exports = {
         }
       },
       animation: {
-        progress: 'progress 2s linear infinite',
+        progress: 'progress 2s ease-in-out',
         bounce: 'bounce 1s infinite'
       }
     },
