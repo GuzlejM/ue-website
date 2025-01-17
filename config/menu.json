@@ -19,6 +19,14 @@
     {
       "name": "FAQ",
       "url": "/faq"
+    },
+    {
+      "name": "AI Assistant",
+      "url": "/ai"
+    },
+    {
+      "name": "AI Agent",
+      "url": "/agent"
     }
   ],
   "footer": [
@@ -36,7 +44,7 @@
       ]
     },
     {
-      "name": "Product",
+      "name": "AI Assistant",
       "menu": [
         {
           "text": "Features",

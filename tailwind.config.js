@@ -68,6 +68,16 @@ module.exports = {
         primary: [fontPrimary, fontPrimaryType],
         secondary: [fontSecondary, fontSecondaryType],
       },
+      keyframes: {
+        progress: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        }
+      },
+      animation: {
+        progress: 'progress 1s ease-in-out infinite',
+        'bounce': 'bounce 1s infinite',
+      }
     },
   },
   plugins: [
