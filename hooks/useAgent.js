@@ -44,7 +44,6 @@ export const useAgent = () => {
   const [userInput, setUserInput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [thinkingSteps, setThinkingSteps] = useState([]);
-  const [currentThinking, setCurrentThinking] = useState(null);
 
   // Initialize with welcome message
   useEffect(() => {
@@ -93,9 +92,8 @@ export const useAgent = () => {
     setUserInput("");
     setIsProcessing(true);
     
-    // Clear previous thinking state
+    // Clear previous thinking state only when starting a new command
     setThinkingSteps([]);
-    setCurrentThinking(null);
 
     // Get mock response
     const mockResponse = getMockResponse(userInput);
@@ -103,7 +101,6 @@ export const useAgent = () => {
     // Find thinking step if exists
     const thinkingStep = mockResponse.find(msg => msg.type === 'thinking');
     if (thinkingStep) {
-      setCurrentThinking(thinkingStep.text);
       setThinkingSteps([thinkingStep]);
     }
 
@@ -114,7 +111,6 @@ export const useAgent = () => {
     setTimeout(() => {
       setMessages(prev => [...prev, ...chatResponses]);
       setIsProcessing(false);
-      setCurrentThinking(null);
     }, 2000);
   };
 
@@ -124,7 +120,6 @@ export const useAgent = () => {
     setUserInput,
     isProcessing,
     thinkingSteps,
-    currentThinking,
     handleSubmit
   };
 }; 

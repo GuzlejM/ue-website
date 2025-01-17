@@ -13,7 +13,6 @@ function AgentChat({ data }) {
     setUserInput, 
     isProcessing, 
     thinkingSteps,
-    currentThinking,
     handleSubmit 
   } = useAgent();
 
@@ -48,24 +47,14 @@ function AgentChat({ data }) {
         <h1 className="text-center font-normal text-gray-200 mb-8">{title}</h1>
         <div className="section row">
           <div className="mx-auto max-w-[800px]">
-            {/* Thinking Steps History */}
-            <div className="mb-6 space-y-4">
-              {thinkingSteps.map((step, index) => (
-                <ThinkingIndicator 
-                  key={index}
-                  thinking={step.text}
-                  isProcessing={isProcessing && index === thinkingSteps.length - 1}
-                />
-              ))}
-            </div>
-
-            {/* Current Thinking */}
-            {isProcessing && currentThinking && (
+            {/* Thinking Indicator */}
+            {thinkingSteps.map((step, index) => (
               <ThinkingIndicator 
-                thinking={currentThinking}
-                isProcessing={true}
+                key={index}
+                thinking={step.text}
+                isProcessing={isProcessing && index === thinkingSteps.length - 1}
               />
-            )}
+            ))}
 
             {/* Main Chat Window */}
             <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-5 shadow-lg backdrop-blur">
