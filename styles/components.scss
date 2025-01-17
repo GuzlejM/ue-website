@@ -150,3 +150,107 @@
     @apply rounded-full bg-border hover:bg-primary/50;
   }
 }
+
+// Agent Chat specific styles
+.agent-message {
+  @apply text-gray-200;
+  
+  pre, code {
+    @apply bg-gray-900 px-2 py-1 rounded font-mono text-sm my-2 block border border-gray-700;
+  }
+  
+  ul, ol {
+    @apply ml-4 my-2;
+  }
+  
+  li {
+    @apply list-disc ml-4;
+  }
+}
+
+.command-text {
+  @apply bg-gray-900 px-3 py-1 rounded-md text-gray-200 border border-gray-700;
+}
+
+.chat-messages {
+  @apply overflow-y-auto transition-all duration-300;
+  
+  &::-webkit-scrollbar {
+    @apply w-1;
+  }
+  
+  &::-webkit-scrollbar-track {
+    @apply rounded-full bg-gray-800;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-gray-700 hover:bg-gray-600;
+  }
+}
+
+// Thinking Panel
+.thinking-steps {
+  @apply space-y-4 transition-all duration-300;
+  
+  .step {
+    @apply relative pl-8;
+    
+    &::before {
+      @apply absolute left-0 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-sm;
+      content: attr(data-step);
+    }
+  }
+}
+
+.thinking-panel {
+  @apply transition-all duration-300 ease-in-out;
+  
+  &.collapsed {
+    @apply h-12 overflow-hidden;
+  }
+  
+  &.expanded {
+    @apply h-auto;
+  }
+}
+
+// Step number circles
+.step-number {
+  @apply w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium;
+  
+  &.completed {
+    @apply bg-green-100 text-green-600;
+  }
+  
+  &.active {
+    @apply bg-blue-100 text-blue-600;
+  }
+  
+  &.pending {
+    @apply bg-gray-100 text-gray-600;
+  }
+}
+
+// Step content
+.step-content {
+  @apply ml-2 flex-1;
+  
+  .step-title {
+    @apply font-medium text-gray-900 mb-1;
+  }
+  
+  .step-description {
+    @apply text-sm text-gray-600;
+  }
+}
+
+// Thinking animation
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.thinking-indicator {
+  @apply fixed top-4 left-1/2 -translate-x-1/2 z-10;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

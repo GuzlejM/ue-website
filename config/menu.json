@@ -23,6 +23,10 @@
     {
       "name": "AI Assistant",
       "url": "/ai"
+    },
+    {
+      "name": "AI Agent",
+      "url": "/agent"
     }
   ],
   "footer": [
