@@ -24,7 +24,7 @@ const ThinkingIndicator = ({ thinking, isProcessing, currentStep }) => {
           onClick={() => setIsExpanded(!isExpanded)}
           className="w-full"
         >
-          <div className="flex flex-col w-full">
+          <div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className={`h-2 w-2 rounded-full ${isProcessing ? 'bg-orange-500 animate-pulse' : 'bg-emerald-500'}`}></span>
@@ -33,7 +33,6 @@ const ThinkingIndicator = ({ thinking, isProcessing, currentStep }) => {
               <div className="flex items-center gap-2">
                 {isProcessing && (
                   <span className="text-orange-500 text-xs flex items-center flex-shrink-0">
-                    thinking
                     <span className="inline-flex ml-1">
                       <span className="animate-[bounce_1s_infinite_0ms] mr-0.5">.</span>
                       <span className="animate-[bounce_1s_infinite_200ms] mr-0.5">.</span>
@@ -52,8 +51,8 @@ const ThinkingIndicator = ({ thinking, isProcessing, currentStep }) => {
               </div>
             </div>
             
-            {!isExpanded && (
-              <div className="mt-2 pl-4">
+            {!isExpanded && currentStep !== undefined && (
+              <div className="pl-4 mt-2">
                 <div className="text-sm text-gray-300 flex items-center gap-2">
                   <span className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${
                     isProcessing ? 'bg-orange-500 animate-pulse' : 'bg-emerald-500'
@@ -71,7 +70,7 @@ const ThinkingIndicator = ({ thinking, isProcessing, currentStep }) => {
         </button>
         
         {isExpanded && (
-          <div className="space-y-2.5 mt-3">
+          <div className="space-y-2.5 mt-2">
             {steps.map((step, index) => (
               <div key={index} className="group relative">
                 <div className="text-sm text-gray-300 pl-4 flex items-center gap-2">
