@@ -37,7 +37,7 @@ export const useAgent = () => {
     setMessages([
       {
         type: 'text',
-        text: "Hello! I'm your AI Agent Assistant. I can help you control your computer and execute commands. Try these commands:\n\n- open terminal\n- open safari\n- take screenshot"
+        text: "Welcome! I'm your AI Assistant, ready to help you control your computer.\n\nHere are some commands you can try:\n\n`open terminal`\nLaunch the terminal application\n\n`open safari`\nStart the Safari web browser\n\n`take screenshot`\nCapture your screen"
       }
     ]);
   }, []);

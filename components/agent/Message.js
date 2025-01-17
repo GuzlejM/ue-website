@@ -1,13 +1,50 @@
 "use client";
 
 const Message = ({ message }) => {
+  const handleCommandClick = (command) => {
+    // Remove backticks and copy to clipboard
+    const cleanCommand = command.replace(/`/g, '');
+    navigator.clipboard.writeText(cleanCommand);
+    
+    // Optional: You could also set it as input
+    if (typeof window !== 'undefined') {
+      const inputElement = document.querySelector('input[type="text"]');
+      if (inputElement) {
+        inputElement.value = cleanCommand;
+        inputElement.focus();
+      }
+    }
+  };
+
+  const renderText = (text) => {
+    // Split by backticks to identify commands
+    const parts = text.split(/(`[^`]+`)/);
+    return parts.map((part, index) => {
+      if (part.startsWith('`') && part.endsWith('`')) {
+        // This is a command
+        return (
+          <code
+            key={index}
+            onClick={() => handleCommandClick(part)}
+            className="cursor-pointer bg-gray-700 px-2 py-1 rounded font-mono text-sm my-1 inline-block hover:bg-gray-600 transition-colors"
+            title="Click to copy or use command"
+          >
+            {part.replace(/`/g, '')}
+          </code>
+        );
+      }
+      // Regular text
+      return <span key={index}>{part}</span>;
+    });
+  };
+
   switch (message.type) {
     case 'text':
       return (
         <div className="flex">
           <div className="max-w-[80%] rounded-lg bg-gray-800/50 px-4 py-3 backdrop-blur">
             <div className="agent-message whitespace-pre-wrap text-gray-200">
-              {message.text}
+              {renderText(message.text)}
             </div>
           </div>
         </div>
