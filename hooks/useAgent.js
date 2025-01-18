@@ -1,29 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-
-const mockResponses = {
-  "open terminal": [
-    {
-      type: "text",
-      text: "I'll help you open the Terminal application. Let me break down the steps:"
-    },
-    {
-      type: "thinking",
-      text: "1. System Check\nChecking if Terminal is already running and system resources\n\n2. Launch Preparation\nPreparing to launch Terminal with default configuration\n\n3. Execution\nExecuting terminal launch command with system privileges"
-    },
-    {
-      type: "text",
-      text: "I've opened Terminal for you. Is there anything specific you'd like to do with it?"
-    }
-  ]
-};
-
-const STEPS = [
-  { name: "System Check", command: "ps aux | grep Terminal" },
-  { name: "Launch Preparation", command: "defaults read com.apple.Terminal" },
-  { name: "Execution", command: "open -a Terminal" }
-];
+import { API_CONFIG } from '../config/api';
 
 export const useAgent = () => {
   const [messages, setMessages] = useState([]);
@@ -43,28 +21,37 @@ export const useAgent = () => {
   }, []);
 
   const executeCommand = async (input) => {
-    const apiKey = localStorage.getItem('anthropic_api_key');
-    if (!apiKey) {
-      throw new Error('API key not found');
+    try {
+      const apiKey = localStorage.getItem('anthropic_api_key');
+      if (!apiKey) {
+        throw new Error('API key not found. Please enter your API key first.');
+      }
+
+      const response = await fetch(`${API_CONFIG.BASE_URL}/execute`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          instruction: input,
+          api_key: apiKey,
+          max_tokens: 4096,
+          keep_recent_images: 10,
+          system_prompt_suffix: ""
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.detail || `HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
     }
-
-    const response = await fetch('/api/execute', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        instruction: input,
-        api_key: apiKey
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to execute command');
-    }
-
-    const data = await response.json();
-    return data;
   };
 
   const handleSubmit = async (e) => {
@@ -91,17 +78,36 @@ export const useAgent = () => {
         }]);
       }
 
-      if (response.tool_outputs) {
+      // Handle tool outputs
+      if (response.tool_outputs && response.tool_outputs.length > 0) {
         response.tool_outputs.forEach(output => {
-          setMessages(prev => [...prev, {
+          const toolMessage = {
             type: 'tool_use',
             id: output.tool_id,
             name: 'bash',
-            input: output.input,
             status: 'completed',
-            output: output.output
-          }]);
+          };
+
+          if (output.output) {
+            toolMessage.output = output.output;
+          }
+
+          if (output.error) {
+            toolMessage.error = output.error;
+            toolMessage.status = 'error';
+          }
+
+          if (output.screenshot_path) {
+            toolMessage.screenshot = output.screenshot_path;
+          }
+
+          setMessages(prev => [...prev, toolMessage]);
         });
+      }
+
+      // Update thinking steps if provided in the API response
+      if (response.api_response?.thinking_steps) {
+        setThinkingSteps(response.api_response.thinking_steps);
       }
     } catch (error) {
       setMessages(prev => [...prev, {
@@ -110,6 +116,7 @@ export const useAgent = () => {
       }]);
     } finally {
       setIsProcessing(false);
+      setCurrentStep(0); // Reset current step
     }
   };
 

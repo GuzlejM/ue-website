@@ -2,11 +2,9 @@
 
 const Message = ({ message }) => {
   const handleCommandClick = (command) => {
-    // Remove backticks and copy to clipboard
     const cleanCommand = command.replace(/`/g, '');
     navigator.clipboard.writeText(cleanCommand);
     
-    // Optional: You could also set it as input
     if (typeof window !== 'undefined') {
       const inputElement = document.querySelector('input[type="text"]');
       if (inputElement) {
@@ -17,11 +15,9 @@ const Message = ({ message }) => {
   };
 
   const renderText = (text) => {
-    // Split by backticks to identify commands
     const parts = text.split(/(`[^`]+`)/);
     return parts.map((part, index) => {
       if (part.startsWith('`') && part.endsWith('`')) {
-        // This is a command
         return (
           <code
             key={index}
@@ -33,7 +29,6 @@ const Message = ({ message }) => {
           </code>
         );
       }
-      // Regular text
       return <span key={index}>{part}</span>;
     });
   };
@@ -71,7 +66,7 @@ const Message = ({ message }) => {
                     message.status === 'running' ? 'animate-pulse' : ''
                   }`}></span>
                   <code className="flex-1 bg-gray-800 px-3 py-1.5 rounded text-gray-200 border border-gray-700">
-                    {message.input.command}
+                    {message.tool_id || 'Command executed'}
                   </code>
                 </div>
                 
@@ -81,21 +76,17 @@ const Message = ({ message }) => {
                   }`}>
                     {message.status === 'running' ? 'Running...' : 'Completed'}
                   </span>
-                  {message.input.step && (
-                    <>
-                      <span className="text-xs text-gray-500">•</span>
-                      <span className="text-xs text-gray-400">
-                        {message.input.step}
-                      </span>
-                    </>
-                  )}
                 </div>
               </div>
-              
-              {message.output && (
+
+              {(message.output || message.error) && (
                 <div className="mt-3 text-gray-400 border-t border-gray-700/50 pt-3">
-                  <span className="text-xs text-gray-500 px-4">Output:</span>
-                  <pre className="mt-2 text-sm bg-gray-800/50 p-3 rounded">{message.output}</pre>
+                  <span className="text-xs text-gray-500 px-4">
+                    {message.error ? 'Error:' : 'Output:'}
+                  </span>
+                  <pre className="mt-2 text-sm bg-gray-800/50 p-3 rounded">
+                    {message.error || message.output}
+                  </pre>
                 </div>
               )}
             </div>
