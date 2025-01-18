@@ -42,19 +42,29 @@ export const useAgent = () => {
     ]);
   }, []);
 
-  const getMockResponse = (input) => {
-    const normalizedInput = input.toLowerCase().trim();
-    
-    if (mockResponses[normalizedInput]) {
-      return mockResponses[normalizedInput];
+  const executeCommand = async (input) => {
+    const apiKey = localStorage.getItem('anthropic_api_key');
+    if (!apiKey) {
+      throw new Error('API key not found');
     }
-    
-    return [
-      {
-        type: "text",
-        text: "I understand you want to '" + input + "'. However, I'm currently in demo mode with limited commands. Please try one of the suggested commands above."
-      }
-    ];
+
+    const response = await fetch('/api/execute', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        instruction: input,
+        api_key: apiKey
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to execute command');
+    }
+
+    const data = await response.json();
+    return data;
   };
 
   const handleSubmit = async (e) => {
@@ -70,168 +80,37 @@ export const useAgent = () => {
     setUserInput("");
     setIsProcessing(true);
 
-    // Get mock response
-    const mockResponse = getMockResponse(userInput);
-    
-    // Find thinking step if exists
-    const thinkingStep = mockResponse.find(msg => msg.type === 'thinking');
-    if (thinkingStep) {
-      setThinkingSteps([thinkingStep]);
-    }
+    try {
+      const response = await executeCommand(userInput);
+      
+      // Update messages with the response
+      if (response.message) {
+        setMessages(prev => [...prev, {
+          type: 'text',
+          text: response.message
+        }]);
+      }
 
-    // Add initial message
-    setMessages(prev => [...prev, mockResponse[0]]);
-
-    // System Check (2s)
-    setCurrentStep(0);
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
-        type: 'tool_use',
-        id: 'step1',
-        name: 'bash',
-        input: { 
-          command: STEPS[0].command,
-          step: STEPS[0].name
-        },
-        status: 'running'
-      }]);
-
-      // Complete first command after 1.8s
-      setTimeout(() => {
-        setMessages(prev => prev.map(msg => 
-          msg.id === 'step1' ? { ...msg, status: 'completed' } : msg
-        ));
-        setCurrentStep(1);
-      }, 1800);
-    }, 2000);
-
-    // Launch Preparation (4s)
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
-        type: 'tool_use',
-        id: 'step2',
-        name: 'bash',
-        input: { 
-          command: STEPS[1].command,
-          step: STEPS[1].name
-        },
-        status: 'running'
-      }]);
-
-      // Complete second command after 1.8s
-      setTimeout(() => {
-        setMessages(prev => prev.map(msg => 
-          msg.id === 'step2' ? { ...msg, status: 'completed' } : msg
-        ));
-        setCurrentStep(2);
-      }, 1800);
-    }, 4000);
-
-    // Final Execution (6s)
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
-        type: 'tool_use',
-        id: 'step3',
-        name: 'bash',
-        input: { 
-          command: STEPS[2].command,
-          step: STEPS[2].name
-        },
-        status: 'running'
-      }]);
-
-      // Complete final command and add success message after 1.8s
-      setTimeout(() => {
-        setMessages(prev => {
-          const updatedMessages = prev.map(msg => 
-            msg.id === 'step3' ? { ...msg, status: 'completed', output: 'Terminal launched successfully' } : msg
-          );
-          return [...updatedMessages, mockResponse[mockResponse.length - 1]];
+      if (response.tool_outputs) {
+        response.tool_outputs.forEach(output => {
+          setMessages(prev => [...prev, {
+            type: 'tool_use',
+            id: output.tool_id,
+            name: 'bash',
+            input: output.input,
+            status: 'completed',
+            output: output.output
+          }]);
         });
-        setIsProcessing(false);
-      }, 1800);
-    }, 6000);
-  };
-
-  const runCommand = async () => {
-    setIsProcessing(true);
-    
-    // Initial message
-    setMessages(prev => [
-      ...prev,
-      {
+      }
+    } catch (error) {
+      setMessages(prev => [...prev, {
         type: 'text',
-        text: "I'll help you open the Terminal application. Let me break down the steps:"
-      }
-    ]);
-
-    // System Check
-    setCurrentStep(0);
-    setMessages(prev => [
-      ...prev,
-      {
-        type: 'tool_use',
-        input: { command: STEPS[0].command, step: STEPS[0].name },
-        status: 'running'
-      }
-    ]);
-    
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setMessages(prev => prev.map((msg, i) => 
-      i === prev.length - 1 
-        ? { ...msg, status: 'completed', output: 'System check passed successfully.' }
-        : msg
-    ));
-    setCurrentStep(1);
-
-    // Launch Preparation
-    setMessages(prev => [
-      ...prev,
-      {
-        type: 'tool_use',
-        input: { command: STEPS[1].command, step: STEPS[1].name },
-        status: 'running'
-      }
-    ]);
-
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    setMessages(prev => prev.map((msg, i) => 
-      i === prev.length - 1 
-        ? { ...msg, status: 'completed', output: 'Terminal preferences loaded successfully.' }
-        : msg
-    ));
-    setCurrentStep(2);
-
-    // Execution
-    setMessages(prev => [
-      ...prev,
-      {
-        type: 'tool_use',
-        input: { command: STEPS[2].command, step: STEPS[2].name },
-        status: 'running'
-      }
-    ]);
-
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    setMessages(prev => prev.map((msg, i) => 
-      i === prev.length - 1 
-        ? { ...msg, status: 'completed', output: 'Terminal launched successfully.' }
-        : msg
-    ));
-
-    // Final message
-    setMessages(prev => [
-      ...prev,
-      {
-        type: 'text',
-        text: "I've opened Terminal for you. Is there anything specific you'd like to do with it?"
-      }
-    ]);
-
-    setIsProcessing(false);
+        text: `Error: ${error.message}`
+      }]);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return {
@@ -241,7 +120,6 @@ export const useAgent = () => {
     isProcessing,
     thinkingSteps,
     currentStep,
-    handleSubmit,
-    runCommand
+    handleSubmit
   };
 };

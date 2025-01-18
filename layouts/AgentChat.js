@@ -4,7 +4,9 @@ import { useRef, useEffect } from "react";
 import Message from "../components/agent/Message";
 import ThinkingIndicator from "../components/agent/ThinkingIndicator";
 import ChatInput from "../components/agent/ChatInput";
+import ApiKeyForm from "../components/agent/ApiKeyForm";
 import { useAgent } from "../hooks/useAgent";
+import { useApiKey } from "../hooks/useApiKey";
 
 function AgentChat({ data }) {
   const { 
@@ -16,6 +18,12 @@ function AgentChat({ data }) {
     handleSubmit,
     currentStep
   } = useAgent();
+
+  const {
+    isValidated,
+    error,
+    validateApiKey
+  } = useApiKey();
 
   const chatContainerRef = useRef(null);
 
@@ -48,36 +56,45 @@ function AgentChat({ data }) {
         <h1 className="text-center font-normal text-gray-200 mb-8">{title}</h1>
         <div className="section row">
           <div className="mx-auto max-w-[800px]">
-            {/* Thinking Indicator */}
-            {thinkingSteps.map((step, index) => (
-              <ThinkingIndicator 
-                key={index}
-                thinking={step.text}
-                isProcessing={isProcessing && index === thinkingSteps.length - 1}
-                currentStep={currentStep}
+            {!isValidated ? (
+              <ApiKeyForm 
+                onValidate={validateApiKey}
+                error={error}
               />
-            ))}
-
-            {/* Main Chat Window */}
-            <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-5 shadow-lg backdrop-blur">
-              <div 
-                ref={chatContainerRef}
-                className="chat-messages max-h-[500px] overflow-y-auto space-y-6"
-              >
-                {messages.map((message, index) => (
-                  <Message key={index} message={message} />
+            ) : (
+              <>
+                {/* Thinking Indicator */}
+                {thinkingSteps.map((step, index) => (
+                  <ThinkingIndicator 
+                    key={index}
+                    thinking={step.text}
+                    isProcessing={isProcessing && index === thinkingSteps.length - 1}
+                    currentStep={currentStep}
+                  />
                 ))}
-              </div>
 
-              <div className="my-4 border-t border-gray-700"></div>
+                {/* Main Chat Window */}
+                <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-5 shadow-lg backdrop-blur">
+                  <div 
+                    ref={chatContainerRef}
+                    className="chat-messages max-h-[500px] overflow-y-auto space-y-6"
+                  >
+                    {messages.map((message, index) => (
+                      <Message key={index} message={message} />
+                    ))}
+                  </div>
 
-              <ChatInput
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onSubmit={handleSubmit}
-                isProcessing={isProcessing}
-              />
-            </div>
+                  <div className="my-4 border-t border-gray-700"></div>
+
+                  <ChatInput
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    onSubmit={handleSubmit}
+                    isProcessing={isProcessing}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
