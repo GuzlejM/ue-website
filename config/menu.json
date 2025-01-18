@@ -1,30 +1,6 @@
 {
   "main": [
     {
-      "name": "Home",
-      "url": "/"
-    },
-    {
-      "name": "Blog",
-      "url": "/blogs"
-    },
-    {
-      "name": "Pricing",
-      "url": "/pricing"
-    },
-    {
-      "name": "Contact",
-      "url": "/contact"
-    },
-    {
-      "name": "FAQ",
-      "url": "/faq"
-    },
-    {
-      "name": "AI Assistant",
-      "url": "/ai"
-    },
-    {
       "name": "AI Agent",
       "url": "/agent"
     }
