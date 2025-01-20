@@ -73,7 +73,7 @@ const Home = async () => {
       {/* Hero Section */}
       <div className="relative min-h-screen bg-[#1a1c3b] text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#2a3170] via-[#4b3488] to-[#7c3aaa] opacity-40"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg opacity-40"></div>
         
         <div className="relative container mx-auto px-4 py-32">
           <div className="text-center mb-16 max-w-4xl mx-auto">
@@ -90,7 +90,7 @@ const Home = async () => {
             <div className="flex flex-col sm:flex-row justify-center gap-6">
               <a
                 href="/agent"
-                className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#4b3488] to-[#7c3aaa] text-white font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
+                className="group inline-flex items-center justify-center gap-2 bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg text-white font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70"
               >
                 Try Our AI Agent
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -111,19 +111,19 @@ const Home = async () => {
 
           {/* Stats Section */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mt-20">
-            <div className="text-center">
+            <div className="text-center bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
               <div className="text-4xl font-bold bg-gradient-to-r from-[#8ab4f8] to-[#c7a7ea] bg-clip-text text-transparent">100+</div>
               <div className="text-gray-400 mt-2">AI Agents Deployed</div>
             </div>
-            <div className="text-center">
+            <div className="text-center bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
               <div className="text-4xl font-bold bg-gradient-to-r from-[#c7a7ea] to-[#f6a6c1] bg-clip-text text-transparent">95%</div>
               <div className="text-gray-400 mt-2">Client Satisfaction</div>
             </div>
-            <div className="text-center">
+            <div className="text-center bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
               <div className="text-4xl font-bold bg-gradient-to-r from-[#f6a6c1] to-[#ffa07a] bg-clip-text text-transparent">50+</div>
               <div className="text-gray-400 mt-2">Expert Developers</div>
             </div>
-            <div className="text-center">
+            <div className="text-center bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
               <div className="text-4xl font-bold bg-gradient-to-r from-[#ffa07a] to-[#8ab4f8] bg-clip-text text-transparent">24/7</div>
               <div className="text-gray-400 mt-2">Support Available</div>
             </div>
