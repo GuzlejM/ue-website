@@ -1,5 +1,7 @@
 "use client";
 
+import config from "@config/config.json";
+
 const Social = () => {
   const social = {
     facebook: "https://facebook.com/",
@@ -51,4 +53,4 @@ const Social = () => {
   );
 };
 
-export default Social;
+export default Social; 

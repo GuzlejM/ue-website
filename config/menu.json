@@ -5,75 +5,129 @@
       "url": "/"
     },
     {
-      "name": "Blog",
-      "url": "/blogs"
+      "name": "Services",
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "AI Agents Development",
+          "url": "/services/ai-agents"
+        },
+        {
+          "name": "Agent Agency",
+          "url": "/services/agency"
+        },
+        {
+          "name": "AI Consulting",
+          "url": "/services/consulting"
+        },
+        {
+          "name": "Architecture Design",
+          "url": "/services/architecture"
+        },
+        {
+          "name": "Development",
+          "url": "/services/development"
+        },
+        {
+          "name": "Maintenance",
+          "url": "/services/maintenance"
+        }
+      ]
     },
     {
-      "name": "Pricing",
-      "url": "/pricing"
+      "name": "Solutions",
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "Enterprise AI",
+          "url": "/solutions/enterprise"
+        },
+        {
+          "name": "Custom AI Agents",
+          "url": "/solutions/custom-agents"
+        },
+        {
+          "name": "AI Integration",
+          "url": "/solutions/integration"
+        }
+      ]
+    },
+    {
+      "name": "Resources",
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "Documentation",
+          "url": "/docs"
+        },
+        {
+          "name": "API Reference",
+          "url": "/api"
+        },
+        {
+          "name": "Case Studies",
+          "url": "/case-studies"
+        }
+      ]
+    },
+    {
+      "name": "Blog",
+      "url": "/blog"
     },
     {
       "name": "Contact",
       "url": "/contact"
-    },
-    {
-      "name": "FAQ",
-      "url": "/faq"
-    },
-    {
-      "name": "AI Assistant",
-      "url": "/ai"
-    },
-    {
-      "name": "AI Agent",
-      "url": "/agent"
     }
   ],
   "footer": [
     {
       "name": "Company",
-      "menu": [
+      "children": [
         {
-          "text": "Pricing",
-          "url": "/pricing"
+          "name": "About",
+          "url": "/about"
         },
         {
-          "text": "Quick Start",
-          "url": "#"
+          "name": "Careers",
+          "url": "/careers"
+        },
+        {
+          "name": "Contact",
+          "url": "/contact"
         }
       ]
     },
     {
-      "name": "AI Assistant",
-      "menu": [
+      "name": "Product",
+      "children": [
         {
-          "text": "Features",
-          "url": "#"
+          "name": "Features",
+          "url": "/features"
         },
         {
-          "text": "Platform",
-          "url": "#"
-        },
-        {
-          "text": "Pricing",
+          "name": "Pricing",
           "url": "/pricing"
+        },
+        {
+          "name": "Security",
+          "url": "/security"
         }
       ]
     },
     {
-      "name": "Support",
-      "menu": [
+      "name": "Resources",
+      "children": [
         {
-          "text": "FAQ",
-          "url": "/faq"
+          "name": "Blog",
+          "url": "/blog"
         },
         {
-          "text": "Privacy Policy",
-          "url": "#"
+          "name": "Documentation",
+          "url": "/docs"
         },
         {
-          "text": "Terms & Conditions",
-          "url": "#"
+          "name": "Support",
+          "url": "/support"
         }
       ]
     }
