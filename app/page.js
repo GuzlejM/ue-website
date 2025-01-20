@@ -1,6 +1,7 @@
 import config from "@config/config.json";
 import SeoMeta from "@layouts/SeoMeta";
 import Services from "@layouts/partials/Services";
+import Link from "next/link";
 
 const Home = async () => {
   const services = [
@@ -152,7 +153,7 @@ const Home = async () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
                 <h3 className="text-2xl font-bold text-white mb-4 relative z-10">{service.title}</h3>
                 <p className="text-gray-300 mb-6 relative z-10">{service.content}</p>
-                <a
+                <Link
                   href={service.button.link}
                   className="inline-flex items-center text-[#8ab4f8] hover:text-[#c7a7ea] transition-colors relative z-10"
                 >
@@ -160,7 +161,7 @@ const Home = async () => {
                   <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
-                </a>
+                </Link>
               </div>
             ))}
           </div>
