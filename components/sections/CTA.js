@@ -3,7 +3,7 @@
 const CTA = () => {
   return (
     <div className="relative bg-gradient-primary py-32">
-      <div className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"></div>
+      <div className="absolute inset-0 opacity-10"></div>
       <div className="relative container-custom text-center">
         <h2 className="text-4xl font-bold text-white mb-8">Ready to Transform Your Business?</h2>
         <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">

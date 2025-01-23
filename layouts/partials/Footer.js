@@ -34,9 +34,9 @@ const Footer = () => {
             );
           })}
           <div className="md:col-6 lg:col-3">
-            <Link href="/" className="mb-8 inline-block">
+            <div className="mb-8">
               <Logo src={logo} />
-            </Link>
+            </div>
             <p className="text-gray-400 mb-8">
               Transforming businesses with next-generation AI solutions and autonomous agents.
             </p>

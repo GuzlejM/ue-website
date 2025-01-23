@@ -5,7 +5,7 @@ import Link from "next/link";
 const Hero = () => {
   return (
     <div className="relative min-h-screen bg-primary text-white overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-20"></div>
+      <div className="absolute inset-0 opacity-20"></div>
       <div className="absolute inset-0 bg-gradient-primary opacity-40"></div>
       
       <div className="relative container-custom py-32">

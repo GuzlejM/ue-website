@@ -73,7 +73,7 @@ const Home = async () => {
       
       {/* Hero Section */}
       <div className="relative min-h-screen bg-[#1a1c3b] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-20"></div>
+        <div className="absolute inset-0 opacity-20"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg opacity-40"></div>
         
         <div className="relative container mx-auto px-4 py-32">
@@ -89,7 +89,7 @@ const Home = async () => {
               we&apos;re your partner in creating intelligent, autonomous systems that drive growth.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
-              <a
+              <Link
                 href="/agent"
                 className="group inline-flex items-center justify-center gap-2 bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg text-white font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70"
               >
@@ -97,8 +97,8 @@ const Home = async () => {
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#services"
                 className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-lg text-white font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105 hover:bg-white/20"
               >
@@ -106,7 +106,7 @@ const Home = async () => {
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -222,13 +222,13 @@ const Home = async () => {
 
       {/* CTA Section */}
       <div className="relative bg-gradient-to-br from-[#2a3170] via-[#4b3488] to-[#7c3aaa] py-32">
-        <div className="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"></div>
+        <div className="absolute inset-0 opacity-10"></div>
         <div className="relative container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold text-white mb-8">Ready to Transform Your Business?</h2>
           <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
             Let&apos;s discuss how our AI solutions can help you achieve your goals
           </p>
-          <a
+          <Link
             href="/contact"
             className="inline-flex items-center justify-center gap-2 bg-white text-[#2a3170] font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105 hover:bg-[#8ab4f8] hover:text-white"
           >
@@ -236,7 +236,7 @@ const Home = async () => {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
     </>
