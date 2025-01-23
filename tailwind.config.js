@@ -29,6 +29,7 @@ module.exports = {
     "./layouts/**/*.{js,ts,jsx,tsx}",
     "./content/**/*.{md,mdx}",
   ],
+  darkMode: 'class',
   theme: {
     screens: {
       sm: "540px",
@@ -43,14 +44,38 @@ module.exports = {
     },
     extend: {
       colors: {
-        text: theme.colors.default.text_color.default,
+        text: {
+          DEFAULT: theme.colors.default.text_color.default,
+          dark: theme.colors.default.text_color.dark,
+        },
         light: theme.colors.default.text_color.light,
         dark: theme.colors.default.text_color.dark,
-        primary: theme.colors.default.theme_color.primary,
+        primary: {
+          DEFAULT: theme.colors.default.theme_color.primary,
+          dark: theme.colors.default.theme_color.primary_dark,
+        },
         secondary: theme.colors.default.theme_color.secondary,
-        body: theme.colors.default.theme_color.body,
-        border: theme.colors.default.theme_color.border,
-        "theme-light": theme.colors.default.theme_color.theme_light,
+        body: {
+          DEFAULT: theme.colors.default.theme_color.body,
+          dark: theme.colors.dark.theme_color.body,
+        },
+        border: {
+          DEFAULT: theme.colors.default.theme_color.border,
+          dark: theme.colors.dark.theme_color.border,
+        },
+        "theme-light": {
+          DEFAULT: theme.colors.default.theme_color.theme_light,
+          dark: theme.colors.dark.theme_color.theme_light,
+        },
+      },
+      backgroundColor: {
+        dark: theme.colors.dark.theme_color.body,
+      },
+      textColor: {
+        dark: {
+          DEFAULT: theme.colors.dark.text_color.default,
+          light: theme.colors.dark.text_color.dark,
+        },
       },
       fontSize: {
         base: font_base + "px",

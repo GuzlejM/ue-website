@@ -14,6 +14,21 @@
         "default": "#777777",
         "dark": "#222222"
       }
+    },
+    "dark": {
+      "theme_color": {
+        "primary": "#6366f1",
+        "primary_dark": "#4f46e5",
+        "accent": "#ff7f3f",
+        "accent_hover": "#ff6320",
+        "body": "#1a1a1a",
+        "border": "#2e2e2e",
+        "theme_light": "#27272a"
+      },
+      "text_color": {
+        "default": "#e5e5e5",
+        "dark": "#ffffff"
+      }
     }
   },
   "fonts": {

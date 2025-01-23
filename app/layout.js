@@ -5,6 +5,7 @@ import Footer from "@layouts/partials/Footer";
 import Header from "@layouts/partials/Header";
 import Providers from "@layouts/partials/Providers";
 import "../styles/style.scss";
+import { ThemeProvider } from "../context/ThemeContext";
 
 export const metadata = {
   title: "BigSpring Light Nextjs",
@@ -56,10 +57,12 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body suppressHydrationWarning={true}>
-        <TwSizeIndicator />
-        <Header />
-        <Providers>{children}</Providers>
-        <Footer />
+        <ThemeProvider>
+          <TwSizeIndicator />
+          <Header />
+          <Providers>{children}</Providers>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
