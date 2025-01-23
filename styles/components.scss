@@ -254,3 +254,16 @@
   @apply fixed top-4 left-1/2 -translate-x-1/2 z-10;
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+// Gradient text styles
+.heading-gradient {
+  @apply text-6xl font-bold mb-8;
+  
+  &.light {
+    @apply bg-gradient-to-r from-primary via-primary-dark to-primary bg-clip-text text-transparent;
+  }
+  
+  &.dark {
+    @apply bg-gradient-to-r from-[#8ab4f8] via-[#c7a7ea] to-[#f6a6c1] bg-clip-text text-transparent;
+  }
+}
