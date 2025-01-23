@@ -1,9 +1,52 @@
+"use client";
+
 import config from "@config/config.json";
 import SeoMeta from "@layouts/SeoMeta";
 import Services from "@layouts/partials/Services";
 import Link from "next/link";
+import { useTheme } from "../context/ThemeContext";
 
-const Home = async () => {
+const Stats = ({ theme }) => {
+  const stats = [
+    { 
+      number: "100+", 
+      label: "AI Agents Deployed", 
+      gradient: "from-[#8ab4f8] to-[#c7a7ea]"
+    },
+    { 
+      number: "95%", 
+      label: "Client Satisfaction", 
+      gradient: "from-[#c7a7ea] to-[#f6a6c1]"
+    },
+    { 
+      number: "50+", 
+      label: "Expert Developers", 
+      gradient: "from-[#f6a6c1] to-[#ffa07a]"
+    },
+    { 
+      number: "24/7", 
+      label: "Support Available", 
+      gradient: "from-[#ffa07a] to-[#8ab4f8]"
+    }
+  ];
+
+  return (
+    <div className="stats-grid">
+      {stats.map((stat, index) => (
+        <div key={index} className="stat-card">
+          <div className={`number ${theme}`} style={theme === 'dark' ? {backgroundImage: `linear-gradient(to right, ${stat.gradient.split(' ')[1]}, ${stat.gradient.split(' ')[3]})`} : {}}>
+            {stat.number}
+          </div>
+          <div className={`label ${theme}`}>{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const Home = () => {
+  const { theme } = useTheme();
+
   const services = [
     {
       title: "AI Agents Development",
@@ -72,36 +115,29 @@ const Home = async () => {
       <SeoMeta title={config.site.title} />
       
       {/* Hero Section */}
-      <div className="relative min-h-screen bg-[#1a1c3b] text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg opacity-40"></div>
+      <div className={`hero-section ${theme}`}>
+        <div className={`hero-background ${theme}`} />
         
         <div className="relative container mx-auto px-4 py-32">
           <div className="text-center mb-16 max-w-4xl mx-auto">
-            <div className="inline-block mb-4 px-6 py-2 bg-white/10 backdrop-blur-lg rounded-full">
-              <span className="text-sm font-medium text-gray-200">Next-Gen AI Solutions</span>
+            <div className={`badge ${theme}`}>
+              <span className={theme}>Next-Gen AI Solutions</span>
             </div>
-            <h1 className="text-6xl font-bold mb-8 bg-gradient-to-r from-[#8ab4f8] via-[#c7a7ea] to-[#f6a6c1] bg-clip-text text-transparent">
+            <h1 className={`heading-gradient ${theme}`}>
               Building the Future with AI Agents
             </h1>
-            <p className="text-xl text-gray-300 mb-12 leading-relaxed">
+            <p className={`text-xl mb-12 leading-relaxed ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}>
               Transform your business with cutting-edge AI solutions. From development to deployment, 
               we&apos;re your partner in creating intelligent, autonomous systems that drive growth.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
-              <Link
-                href="/agent"
-                className="group inline-flex items-center justify-center gap-2 bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg text-white font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70"
-              >
+              <Link href="/agent" className={`primary-button ${theme}`}>
                 Try Our AI Agent
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
-              <Link
-                href="#services"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-lg text-white font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105 hover:bg-white/20"
-              >
+              <Link href="#services" className={`secondary-button ${theme}`}>
                 Explore Services
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -110,38 +146,20 @@ const Home = async () => {
             </div>
           </div>
 
-          {/* Stats Section */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mt-20">
-            <div className="text-center bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
-              <div className="text-4xl font-bold bg-gradient-to-r from-[#8ab4f8] to-[#c7a7ea] bg-clip-text text-transparent">100+</div>
-              <div className="text-gray-400 mt-2">AI Agents Deployed</div>
-            </div>
-            <div className="text-center bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
-              <div className="text-4xl font-bold bg-gradient-to-r from-[#c7a7ea] to-[#f6a6c1] bg-clip-text text-transparent">95%</div>
-              <div className="text-gray-400 mt-2">Client Satisfaction</div>
-            </div>
-            <div className="text-center bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
-              <div className="text-4xl font-bold bg-gradient-to-r from-[#f6a6c1] to-[#ffa07a] bg-clip-text text-transparent">50+</div>
-              <div className="text-gray-400 mt-2">Expert Developers</div>
-            </div>
-            <div className="text-center bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
-              <div className="text-4xl font-bold bg-gradient-to-r from-[#ffa07a] to-[#8ab4f8] bg-clip-text text-transparent">24/7</div>
-              <div className="text-gray-400 mt-2">Support Available</div>
-            </div>
-          </div>
+          <Stats theme={theme} />
         </div>
       </div>
 
       {/* Services Section */}
-      <div id="services" className="relative bg-[#1a1c3b] py-32">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2a3170]/0 via-[#4b3488]/5 to-[#1a1c3b]/0"></div>
+      <div id="services" className={`services-section ${theme}`}>
+        <div className={`services-background ${theme}`} />
         <div className="relative container mx-auto px-4">
           <div className="text-center mb-16">
-            <div className="inline-block mb-4 px-6 py-2 bg-white/10 backdrop-blur-lg rounded-full">
-              <span className="text-sm font-medium text-gray-200">Our Services</span>
+            <div className={`badge ${theme}`}>
+              <span className={theme}>Our Services</span>
             </div>
-            <h2 className="text-5xl font-bold text-white mb-6">Comprehensive AI Solutions</h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            <h2 className={`section-title ${theme}`}>Comprehensive AI Solutions</h2>
+            <p className={`section-description ${theme}`}>
               From concept to deployment, we provide end-to-end AI services that transform your business
             </p>
           </div>
@@ -149,16 +167,12 @@ const Home = async () => {
           {/* Service Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index} className="group relative bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"></div>
-                <h3 className="text-2xl font-bold text-white mb-4 relative z-10">{service.title}</h3>
-                <p className="text-gray-300 mb-6 relative z-10">{service.content}</p>
-                <Link
-                  href={service.button.link}
-                  className="inline-flex items-center text-[#8ab4f8] hover:text-[#c7a7ea] transition-colors relative z-10"
-                >
+              <div key={index} className={`group service-card ${theme}`}>
+                <h3 className={`title ${theme}`}>{service.title}</h3>
+                <p className={`content ${theme}`}>{service.content}</p>
+                <Link href={service.button.link} className={`link ${theme}`}>
                   {service.button.label}
-                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </Link>
@@ -169,13 +183,13 @@ const Home = async () => {
       </div>
 
       {/* Features Grid */}
-      <div className="bg-[#1a1c3b] py-32">
+      <div className="features-section">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <div className="inline-block mb-4 px-6 py-2 bg-white/10 backdrop-blur-lg rounded-full">
-              <span className="text-sm font-medium text-gray-200">Why Choose Us</span>
+            <div className={`badge dark`}>
+              <span className="dark">Why Choose Us</span>
             </div>
-            <h2 className="text-5xl font-bold text-white mb-6">Our Capabilities</h2>
+            <h2 className="section-title dark">Our Capabilities</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -210,10 +224,10 @@ const Home = async () => {
                 description: "Round-the-clock support and maintenance for your AI solutions."
               }
             ].map((feature, index) => (
-              <div key={index} className="group bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105">
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
+              <div key={index} className="group feature-card">
+                <div className="icon">{feature.icon}</div>
+                <h3 className="title">{feature.title}</h3>
+                <p className="description">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -221,17 +235,14 @@ const Home = async () => {
       </div>
 
       {/* CTA Section */}
-      <div className="relative bg-gradient-to-br from-[#2a3170] via-[#4b3488] to-[#7c3aaa] py-32">
+      <div className={`cta-section ${theme}`}>
         <div className="absolute inset-0 opacity-10"></div>
         <div className="relative container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-8">Ready to Transform Your Business?</h2>
-          <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+          <h2 className={`section-title ${theme}`}>Ready to Transform Your Business?</h2>
+          <p className={`section-description ${theme}`}>
             Let&apos;s discuss how our AI solutions can help you achieve your goals
           </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center gap-2 bg-white text-[#2a3170] font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105 hover:bg-[#8ab4f8] hover:text-white"
-          >
+          <Link href="/contact" className={`cta-button ${theme}`}>
             Get Started
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />

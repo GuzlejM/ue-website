@@ -260,10 +260,286 @@
   @apply text-6xl font-bold mb-8;
   
   &.light {
-    @apply bg-gradient-to-r from-primary via-primary-dark to-primary bg-clip-text text-transparent;
+    @apply text-primary;
   }
   
   &.dark {
     @apply bg-gradient-to-r from-[#8ab4f8] via-[#c7a7ea] to-[#f6a6c1] bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: shine 5s ease infinite;
+  }
+}
+
+@keyframes shine {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: shine 5s ease infinite;
+}
+
+// Hero section
+.hero-section {
+  @apply relative min-h-screen overflow-hidden;
+  
+  &.light {
+    @apply bg-white text-gray-900;
+  }
+  
+  &.dark {
+    @apply bg-[#1a1c3b] text-white;
+  }
+}
+
+.hero-background {
+  @apply absolute inset-0 bg-gradient-to-br;
+  
+  &.light {
+    @apply from-primary/5 to-primary-dark/5;
+  }
+  
+  &.dark {
+    @apply from-[#2a3170]/20 to-[#4b3488]/20;
+  }
+}
+
+.badge {
+  @apply inline-block mb-4 px-6 py-2 backdrop-blur-lg rounded-full;
+  
+  &.light {
+    @apply bg-gray-100;
+  }
+  
+  &.dark {
+    @apply bg-white/10;
+  }
+  
+  span {
+    @apply text-sm font-medium;
+    
+    &.light {
+      @apply text-gray-600;
+    }
+    
+    &.dark {
+      @apply text-gray-200;
+    }
+  }
+}
+
+// Button styles
+.primary-button {
+  @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl transition-all transform hover:scale-105 font-semibold;
+  
+  &.light {
+    @apply bg-gradient-to-br from-primary to-primary-dark hover:from-primary-dark hover:to-primary text-white;
+  }
+  
+  &.dark {
+    @apply bg-gradient-to-br from-[#8ab4f8]/20 to-[#c7a7ea]/20 hover:from-[#8ab4f8]/30 hover:to-[#c7a7ea]/30 text-white backdrop-blur-lg;
+  }
+}
+
+.secondary-button {
+  @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl transition-all transform hover:scale-105 backdrop-blur-lg font-semibold;
+  
+  &.light {
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-900;
+  }
+  
+  &.dark {
+    @apply bg-white/5 hover:bg-white/10 text-white;
+  }
+}
+
+// Stats styles
+.stats-grid {
+  @apply grid grid-cols-2 md:grid-cols-4 gap-8 mt-20;
+}
+
+.stat-card {
+  @apply text-center;
+  
+  .number {
+    @apply text-5xl font-bold mb-2;
+    
+    &.light {
+      @apply text-primary;
+    }
+    
+    &.dark {
+      @apply bg-gradient-to-r bg-clip-text text-transparent animate-gradient;
+    }
+  }
+  
+  .label {
+    @apply font-medium;
+    
+    &.light {
+      @apply text-gray-600;
+    }
+    
+    &.dark {
+      @apply text-gray-300;
+    }
+  }
+}
+
+// Services section
+.services-section {
+  @apply relative py-32;
+  
+  &.light {
+    @apply bg-white;
+  }
+  
+  &.dark {
+    @apply bg-[#1a1c3b];
+  }
+}
+
+.services-background {
+  @apply absolute inset-0;
+  
+  &.light {
+    @apply bg-gradient-to-b from-white/0 via-gray-100/5 to-white/0;
+  }
+  
+  &.dark {
+    @apply bg-gradient-to-b from-[#2a3170]/0 via-[#4b3488]/5 to-[#1a1c3b]/0;
+  }
+}
+
+.section-title {
+  @apply text-5xl font-bold mb-6;
+  
+  &.light {
+    @apply text-gray-900;
+  }
+  
+  &.dark {
+    @apply text-white;
+  }
+}
+
+.section-description {
+  @apply text-xl max-w-2xl mx-auto;
+  
+  &.light {
+    @apply text-gray-600;
+  }
+  
+  &.dark {
+    @apply text-gray-300;
+  }
+}
+
+// Service card
+.service-card {
+  @apply relative backdrop-blur-lg rounded-2xl p-8 transition-all transform hover:scale-105;
+  
+  &.light {
+    @apply bg-gradient-to-br from-primary/5 to-primary-dark/5;
+    
+    &:hover {
+      @apply from-primary/10 to-primary-dark/10;
+    }
+  }
+  
+  &.dark {
+    @apply bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50;
+    
+    &:hover {
+      @apply from-[#2a3170]/70 to-[#4b3488]/70;
+    }
+  }
+  
+  .title {
+    @apply text-2xl font-bold mb-4 relative z-10;
+    
+    &.light {
+      @apply text-gray-900;
+    }
+    
+    &.dark {
+      @apply text-white;
+    }
+  }
+  
+  .content {
+    @apply mb-6 relative z-10;
+    
+    &.light {
+      @apply text-gray-600;
+    }
+    
+    &.dark {
+      @apply text-gray-300;
+    }
+  }
+  
+  .link {
+    @apply inline-flex items-center transition-colors relative z-10;
+    
+    &.light {
+      @apply text-primary hover:text-primary-dark;
+    }
+    
+    &.dark {
+      @apply text-[#8ab4f8] hover:text-[#c7a7ea];
+    }
+  }
+}
+
+// Features section
+.features-section {
+  @apply bg-[#1a1c3b] py-32;
+}
+
+.feature-card {
+  @apply bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 transition-all transform hover:scale-105;
+  
+  &:hover {
+    @apply from-[#2a3170]/70 to-[#4b3488]/70;
+  }
+  
+  .icon {
+    @apply text-4xl mb-4;
+  }
+  
+  .title {
+    @apply text-xl font-semibold text-white mb-3;
+  }
+  
+  .description {
+    @apply text-gray-400;
+  }
+}
+
+// CTA section
+.cta-section {
+  @apply relative py-32;
+  
+  &.light {
+    @apply bg-gradient-to-br from-primary via-primary-dark to-primary;
+  }
+  
+  &.dark {
+    @apply bg-gradient-to-br from-[#2a3170] via-[#4b3488] to-[#7c3aaa];
+  }
+}
+
+.cta-button {
+  @apply inline-flex items-center justify-center gap-2 font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105;
+  
+  &.light {
+    @apply bg-primary text-white hover:bg-primary-dark;
+  }
+  
+  &.dark {
+    @apply bg-white text-[#2a3170] hover:bg-[#8ab4f8] hover:text-white;
   }
 }
