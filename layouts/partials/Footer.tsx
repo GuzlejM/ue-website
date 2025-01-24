@@ -6,8 +6,15 @@ import config from "@config/config.json";
 import menu from "@config/menu.json";
 import Link from "next/link";
 
-const Footer = () => {
-  const { footer } = menu;
+interface FooterItem {
+  name: string;
+  url?: string;
+  children?: FooterItem[];
+}
+
+const Footer: React.FC = () => {
+  const { footer } = menu as { footer: FooterItem[] };
+  
   return (
     <footer className="bg-white dark:bg-[#1a1c3b] pt-12 pb-8 px-4">
       <div className="container">
@@ -24,7 +31,7 @@ const Footer = () => {
                 {col.children?.map((item, i) => (
                   <li key={`footer-item-${i}`}>
                     <Link
-                      href={item.url}
+                      href={item.url || '#'}
                       className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-white transition-colors"
                     >
                       {item.name}
@@ -45,5 +52,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
-
+export default Footer; 

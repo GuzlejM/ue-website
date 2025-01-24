@@ -3,7 +3,63 @@
 import Link from "next/link";
 import { useTheme } from "../../context/ThemeContext";
 
-const Hero = () => {
+// Define types for our theme and stats
+type Theme = 'light' | 'dark';
+
+interface StatItem {
+  number: string;
+  label: string;
+  gradient: string;
+}
+
+interface StatsProps {
+  theme: Theme;
+}
+
+const Stats: React.FC<StatsProps> = ({ theme }) => {
+  const stats: StatItem[] = [
+    { 
+      number: "100+", 
+      label: "AI Agents Deployed", 
+      gradient: "from-[#8ab4f8] to-[#c7a7ea]"
+    },
+    { 
+      number: "95%", 
+      label: "Client Satisfaction", 
+      gradient: "from-[#c7a7ea] to-[#f6a6c1]"
+    },
+    { 
+      number: "50+", 
+      label: "Expert Developers", 
+      gradient: "from-[#f6a6c1] to-[#ffa07a]"
+    },
+    { 
+      number: "24/7", 
+      label: "Support Available", 
+      gradient: "from-[#ffa07a] to-[#8ab4f8]"
+    }
+  ];
+
+  return (
+    <div className="stats-grid">
+      {stats.map((stat, index) => (
+        <div key={index} className="stat-card">
+          <div 
+            className={`number ${theme}`} 
+            style={theme === 'dark' ? {
+              backgroundImage: `linear-gradient(to right, ${stat.gradient.split(' ')[1]}, ${stat.gradient.split(' ')[3]})`
+            } : {}}
+          >
+            {stat.number}
+          </div>
+          <div className={`label ${theme}`}>{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const Hero: React.FC = () => {
   const { theme } = useTheme();
   
   return (
@@ -40,44 +96,6 @@ const Hero = () => {
 
         <Stats theme={theme} />
       </div>
-    </div>
-  );
-};
-
-const Stats = ({ theme }) => {
-  const stats = [
-    { 
-      number: "100+", 
-      label: "AI Agents Deployed", 
-      gradient: "from-[#8ab4f8] to-[#c7a7ea]"
-    },
-    { 
-      number: "95%", 
-      label: "Client Satisfaction", 
-      gradient: "from-[#c7a7ea] to-[#f6a6c1]"
-    },
-    { 
-      number: "50+", 
-      label: "Expert Developers", 
-      gradient: "from-[#f6a6c1] to-[#ffa07a]"
-    },
-    { 
-      number: "24/7", 
-      label: "Support Available", 
-      gradient: "from-[#ffa07a] to-[#8ab4f8]"
-    }
-  ];
-
-  return (
-    <div className="stats-grid">
-      {stats.map((stat, index) => (
-        <div key={index} className="stat-card">
-          <div className={`number ${theme}`} style={theme === 'dark' ? {backgroundImage: `linear-gradient(to right, ${stat.gradient.split(' ')[1]}, ${stat.gradient.split(' ')[3]})`} : {}}>
-            {stat.number}
-          </div>
-          <div className={`label ${theme}`}>{stat.label}</div>
-        </div>
-      ))}
     </div>
   );
 };

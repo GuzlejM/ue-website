@@ -1,10 +1,14 @@
 "use client";
 
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "@context/ThemeContext";
 import Image from "next/image";
 import Link from "next/link";
 
-const Logo = ({ src }) => {
+interface LogoProps {
+  src?: string;
+}
+
+const Logo: React.FC<LogoProps> = ({ src }) => {
   const { theme } = useTheme();
   
   return (

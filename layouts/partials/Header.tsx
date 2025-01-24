@@ -5,21 +5,34 @@ import menu from "@config/menu.json";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
-import config from "../../config/config.json";
+import config from "@config/config.json";
 import ThemeToggle from "@components/ThemeToggle";
 
-const Header = () => {
+interface MenuItem {
+  name: string;
+  url: string;
+  hasChildren?: boolean;
+  children?: MenuItem[];
+}
+
+interface NavButton {
+  enable: boolean;
+  label: string;
+  link: string;
+}
+
+const Header: React.FC = () => {
   const pathname = usePathname();
 
-  // distructuring the main menu from menu object
-  const { main } = menu;
+  // destructuring the main menu from menu object
+  const { main } = menu as { main: MenuItem[] };
 
   // states declaration
-  const [navOpen, setNavOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState<boolean>(false);
 
   // logo source
   const { logo } = config.site;
-  const { enable, label, link } = config.nav_button;
+  const { enable, label, link } = config.nav_button as NavButton;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#1a1c3b]/80 backdrop-blur-lg border-b border-border dark:border-white/10">
@@ -58,7 +71,7 @@ const Header = () => {
                       </svg>
                     </button>
                     <div className="absolute left-0 mt-2 w-48 rounded-xl bg-white dark:bg-[#2a3170]/90 backdrop-blur-lg border border-border dark:border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                      {menu.children.map((child, i) => (
+                      {menu.children?.map((child, i) => (
                         <Link
                           key={`child-${i}`}
                           href={child.url}
@@ -107,7 +120,7 @@ const Header = () => {
                     <div className="space-y-2">
                       <div className="text-gray-600 dark:text-gray-300 font-medium">{menu.name}</div>
                       <div className="ml-4 flex flex-col space-y-2">
-                        {menu.children.map((child, i) => (
+                        {menu.children?.map((child, i) => (
                           <Link
                             key={`mobile-child-${i}`}
                             href={child.url}
@@ -152,4 +165,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header; 
