@@ -1,13 +1,19 @@
 "use client";
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const ThinkingIndicator = ({ thinking, isProcessing, currentStep }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+interface ThinkingIndicatorProps {
+  thinking: string;
+  isProcessing: boolean;
+  currentStep?: number;
+}
+
+const ThinkingIndicator: React.FC<ThinkingIndicatorProps> = ({ thinking, isProcessing, currentStep }) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
   
   if (!thinking) return null;
 
-  const steps = thinking.split('\n').reduce((acc, step) => {
+  const steps = thinking.split('\n').reduce<string[]>((acc, step) => {
     if (step.trim() === '') return acc;
     
     const [_, ...content] = step.split('. ');
@@ -77,7 +83,7 @@ const ThinkingIndicator = ({ thinking, isProcessing, currentStep }) => {
                   <span className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${
                     isProcessing && index === currentStep 
                       ? 'bg-orange-500 animate-pulse' 
-                      : index < currentStep || !isProcessing 
+                      : index < (currentStep ?? 0) || !isProcessing 
                         ? 'bg-emerald-500' 
                         : 'bg-gray-500'
                   }`}></span>

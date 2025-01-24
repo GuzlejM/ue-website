@@ -1,11 +1,16 @@
 "use client";
 
-import { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 
-const ApiKeyForm = ({ onValidate, error }) => {
-  const [apiKey, setApiKey] = useState('');
+interface ApiKeyFormProps {
+  onValidate: (apiKey: string) => Promise<void>;
+  error?: string;
+}
 
-  const handleSubmit = async (e) => {
+const ApiKeyForm: React.FC<ApiKeyFormProps> = ({ onValidate, error }) => {
+  const [apiKey, setApiKey] = useState<string>('');
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!apiKey.trim()) return;
     await onValidate(apiKey.trim());

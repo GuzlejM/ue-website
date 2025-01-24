@@ -1,8 +1,9 @@
 "use client";
 
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "@context/ThemeContext";
+import React from "react";
 
-const CTA = () => {
+const CTA: React.FC = () => {
   const { theme } = useTheme();
   
   return (

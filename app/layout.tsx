@@ -1,9 +1,9 @@
 import config from "@config/config.json";
 import theme from "@config/theme.json";
 import TwSizeIndicator from "@layouts/components/TwSizeIndicator";
-import Footer from "@layouts/partials/Footer";
-import Header from "@layouts/partials/Header";
-import Providers from "@layouts/partials/Providers";
+import Footer from "@/layouts/partials/Footer";
+import Header from "@/layouts/partials/Header";
+import Providers from "@/layouts/partials/Providers";
 import "../styles/style.scss";
 import { ThemeProvider } from "@context/ThemeContext";
 import { ReactNode } from "react";

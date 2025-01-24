@@ -5,8 +5,15 @@ import {
   IoLogoTwitter,
   IoLogoYoutube,
 } from "react-icons/io5";
+import { Theme } from "@context/ThemeContext";
 
-const Share = ({ title, description, theme }) => {
+interface ShareProps {
+  title: string;
+  description: string;
+  theme: Theme;
+}
+
+const Share: React.FC<ShareProps> = ({ title, description, theme }) => {
   // social share url
   const facebookUrl = `https://facebook.com/sharer/sharer.php?u=${process.env.NEXT_PUBLIC_SITE_URL}`;
   const twitterUrl = `https://twitter.com/intent/tweet/?text=${title}&amp;url=${process.env.NEXT_PUBLIC_SITE_URL}`;

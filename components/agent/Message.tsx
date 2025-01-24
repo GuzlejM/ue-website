@@ -1,12 +1,44 @@
 "use client";
 
-const Message = ({ message }) => {
-  const handleCommandClick = (command) => {
+import React from 'react';
+
+type MessageStatus = 'running' | 'completed' | 'error';
+
+interface BaseMessage {
+  type: 'text' | 'tool_use' | 'user';
+}
+
+interface TextMessage extends BaseMessage {
+  type: 'text';
+  text: string;
+}
+
+interface ToolUseMessage extends BaseMessage {
+  type: 'tool_use';
+  status: MessageStatus;
+  tool_id?: string;
+  output?: string;
+  error?: string;
+}
+
+interface UserMessage extends BaseMessage {
+  type: 'user';
+  content: string;
+}
+
+type MessageType = TextMessage | ToolUseMessage | UserMessage;
+
+interface MessageProps {
+  message: MessageType;
+}
+
+const Message: React.FC<MessageProps> = ({ message }) => {
+  const handleCommandClick = (command: string) => {
     const cleanCommand = command.replace(/`/g, '');
     navigator.clipboard.writeText(cleanCommand);
     
     if (typeof window !== 'undefined') {
-      const inputElement = document.querySelector('input[type="text"]');
+      const inputElement = document.querySelector<HTMLInputElement>('input[type="text"]');
       if (inputElement) {
         inputElement.value = cleanCommand;
         inputElement.focus();
@@ -14,7 +46,7 @@ const Message = ({ message }) => {
     }
   };
 
-  const renderText = (text) => {
+  const renderText = (text: string) => {
     const parts = text.split(/(`[^`]+`)/);
     return parts.map((part, index) => {
       if (part.startsWith('`') && part.endsWith('`')) {
@@ -45,7 +77,7 @@ const Message = ({ message }) => {
         </div>
       );
     case 'tool_use':
-      const getStatusColor = (status) => {
+      const getStatusColor = (status: MessageStatus) => {
         switch (status) {
           case 'running':
             return 'bg-orange-500';

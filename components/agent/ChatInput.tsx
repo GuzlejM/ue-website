@@ -1,10 +1,19 @@
 "use client";
 
-const ChatInput = ({ value, onChange, onSubmit, isProcessing }) => {
-  const handleKeyDown = (e) => {
+import React, { FormEvent, ChangeEvent, KeyboardEvent } from 'react';
+
+interface ChatInputProps {
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  isProcessing: boolean;
+}
+
+const ChatInput: React.FC<ChatInputProps> = ({ value, onChange, onSubmit, isProcessing }) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      onSubmit(e);
+      onSubmit(e as unknown as FormEvent<HTMLFormElement>);
     }
   };
 
