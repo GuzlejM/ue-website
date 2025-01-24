@@ -53,28 +53,6 @@
       ]
     },
     {
-      "name": "Resources",
-      "hasChildren": true,
-      "children": [
-        {
-          "name": "Documentation",
-          "url": "/docs"
-        },
-        {
-          "name": "API Reference",
-          "url": "/api"
-        },
-        {
-          "name": "Case Studies",
-          "url": "/case-studies"
-        }
-      ]
-    },
-    {
-      "name": "Blog",
-      "url": "/blog"
-    },
-    {
       "name": "Contact",
       "url": "/contact"
     }
@@ -111,23 +89,6 @@
         {
           "name": "Security",
           "url": "/security"
-        }
-      ]
-    },
-    {
-      "name": "Resources",
-      "children": [
-        {
-          "name": "Blog",
-          "url": "/blog"
-        },
-        {
-          "name": "Documentation",
-          "url": "/docs"
-        },
-        {
-          "name": "Support",
-          "url": "/support"
         }
       ]
     }
