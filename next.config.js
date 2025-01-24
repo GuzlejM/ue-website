@@ -17,6 +17,7 @@ const nextConfig = {
       '@hooks': path.resolve(__dirname, './hooks'),
       '@lib': path.resolve(__dirname, './lib')
     };
+    config.resolve.extensions = ['.ts', '.tsx', '.js', '.jsx', ...config.resolve.extensions];
     return config;
   }
 };

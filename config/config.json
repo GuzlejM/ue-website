@@ -13,7 +13,8 @@
     "theme_switcher": true,
     "theme_default": "dark",
     "pagination": 6,
-    "summary_length": 200
+    "summary_length": 200,
+    "blog_folder": "blogs"
   },
 
   "nav_button": {

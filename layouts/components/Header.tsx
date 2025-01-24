@@ -9,11 +9,22 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 
-const Header = () => {
+interface MenuItem {
+  name: string;
+  url: string;
+  hasChildren?: boolean;
+  children?: MenuItem[];
+}
+
+interface Menu {
+  main: MenuItem[];
+}
+
+const Header: React.FC = () => {
   const { theme } = useTheme();
   
   // distructuring the main menu from menu object
-  const { main } = menu;
+  const { main } = menu as Menu;
 
   // states declaration
   const [navFixed, setNavFixed] = useState(false);
@@ -35,6 +46,7 @@ const Header = () => {
       }
     };
     window.addEventListener("scroll", changeNavbarBackground);
+    return () => window.removeEventListener("scroll", changeNavbarBackground);
   }, []);
 
   return (
@@ -79,7 +91,7 @@ const Header = () => {
                       href={menu.url}
                       className={`nav-link ${theme} ${
                         menu.children
-                          .map((c) => c.url)
+                          ?.map((c) => c.url)
                           .includes(pathname) ||
                         pathname === menu.url
                           ? "nav-link-active"

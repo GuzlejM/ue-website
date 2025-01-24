@@ -1,10 +1,30 @@
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
-import { parseMDX } from "./utils/mdxParser";
+import { parseMDX } from "@lib/utils/mdxParser";
+
+export interface PageData {
+  frontmatter: {
+    [key: string]: any;
+  };
+  content: string;
+  mdxContent?: any;
+}
+
+export interface SinglePageData {
+  frontmatter: {
+    draft?: boolean;
+    layout?: string;
+    date?: string;
+    url?: string;
+    [key: string]: any;
+  };
+  slug: string;
+  content: string;
+}
 
 // get index page data, ex: _index.md
-export const getListPage = async (filePath) => {
+export const getListPage = async (filePath: string): Promise<PageData> => {
   const pageData = fs.readFileSync(path.join(filePath), "utf-8");
   const pageDataParsed = matter(pageData);
   const notFoundPage = fs.readFileSync(path.join("content/404.md"), "utf-8");
@@ -28,7 +48,7 @@ export const getListPage = async (filePath) => {
 };
 
 // get all single pages, ex: blog/post.md
-export const getSinglePage = (folder) => {
+export const getSinglePage = (folder: string): SinglePageData[] => {
   const filesPath = fs.readdirSync(path.join(folder));
   const sanitizeFiles = filesPath.filter((file) => file.includes(".md"));
   const filterSingleFiles = sanitizeFiles.filter((file) =>
@@ -57,7 +77,7 @@ export const getSinglePage = (folder) => {
 };
 
 // get regular page data, ex: about.md
-export const getRegularPage = async (slug) => {
+export const getRegularPage = async (slug: string): Promise<PageData> => {
   const publishedPages = getSinglePage("content");
   const pageData = publishedPages.filter((data) => data.slug === slug);
   const notFoundPage = fs.readFileSync(path.join("content/404.md"), "utf-8");
@@ -78,4 +98,4 @@ export const getRegularPage = async (slug) => {
     content,
     mdxContent,
   };
-};
+}; 

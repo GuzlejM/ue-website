@@ -7,7 +7,25 @@ import { getSinglePage } from "@lib/contentParser";
 
 const { blog_folder } = config.settings;
 
-const ArticleContent = ({ frontmatter, content }) => {
+interface ArticleContentProps {
+  frontmatter: {
+    title: string;
+    date: string;
+    image?: string;
+    categories?: string[];
+    description?: string;
+    [key: string]: any;
+  };
+  content: string;
+}
+
+interface ArticleParams {
+  params: {
+    single: string;
+  };
+}
+
+const ArticleContent: React.FC<ArticleContentProps> = ({ frontmatter, content }) => {
   const { theme } = useTheme();
   
   return (
@@ -23,7 +41,7 @@ const ArticleContent = ({ frontmatter, content }) => {
   );
 };
 
-const Article = async ({ params }) => {
+const Article = async ({ params }: ArticleParams) => {
   const { single } = params;
   const posts = await getSinglePage(`content/${blog_folder}`);
   const post = posts.filter((p) => p.slug == single);
@@ -42,4 +60,4 @@ export const generateStaticParams = async () => {
   }));
 
   return paths;
-};
+}; 

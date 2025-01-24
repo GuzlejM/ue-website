@@ -25,11 +25,15 @@ const SeoMeta: React.FC<SeoMetaProps> = ({
   const { base_url } = config.site;
   const pathname = usePathname();
 
+  const getContent = (content: string | null | undefined): string => {
+    return content || "";
+  };
+
   return (
     <>
       {/* title */}
       <title>
-        {plainify(meta_title ? meta_title : title ? title : config.site.title)}
+        {getContent(plainify(meta_title ? meta_title : title ? title : config.site.title))}
       </title>
 
       {/* canonical url */}
@@ -41,7 +45,7 @@ const SeoMeta: React.FC<SeoMetaProps> = ({
       {/* meta-description */}
       <meta
         name="description"
-        content={plainify(description ? description : meta_description)}
+        content={getContent(plainify(description ? description : meta_description))}
       />
 
       {/* author from config.json */}
@@ -50,15 +54,15 @@ const SeoMeta: React.FC<SeoMetaProps> = ({
       {/* og-title */}
       <meta
         property="og:title"
-        content={plainify(
+        content={getContent(plainify(
           meta_title ? meta_title : title ? title : config.site.title
-        )}
+        ))}
       />
 
       {/* og-description */}
       <meta
         property="og:description"
-        content={plainify(description ? description : meta_description)}
+        content={getContent(plainify(description ? description : meta_description))}
       />
       <meta property="og:type" content="website" />
       <meta
@@ -69,15 +73,15 @@ const SeoMeta: React.FC<SeoMetaProps> = ({
       {/* twitter-title */}
       <meta
         name="twitter:title"
-        content={plainify(
+        content={getContent(plainify(
           meta_title ? meta_title : title ? title : config.site.title
-        )}
+        ))}
       />
 
       {/* twitter-description */}
       <meta
         name="twitter:description"
-        content={plainify(description ? description : meta_description)}
+        content={getContent(plainify(description ? description : meta_description))}
       />
 
       {/* og-image */}

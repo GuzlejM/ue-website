@@ -4,7 +4,11 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 
-const MDXContent = ({ content }) => {
+interface MDXContentProps {
+  content: string;
+}
+
+const MDXContent: React.FC<MDXContentProps> = ({ content }) => {
   const mdxOptions = {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [rehypeHighlight],
@@ -22,4 +26,4 @@ const MDXContent = ({ content }) => {
   );
 };
 
-export default MDXContent;
+export default MDXContent; 

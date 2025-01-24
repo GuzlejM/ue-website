@@ -8,8 +8,13 @@ import {
   IoLogoYoutube,
 } from "react-icons/io5";
 import { useTheme } from "../../context/ThemeContext";
+import React from "react";
 
-const Social = ({ className }) => {
+interface SocialProps {
+  className?: string;
+}
+
+const Social: React.FC<SocialProps> = ({ className }) => {
   const { theme } = useTheme();
   const social = config.social || {};
   const { facebook, twitter, linkedin, youtube } = social;
@@ -90,4 +95,4 @@ const Social = ({ className }) => {
   );
 };
 
-export default Social;
+export default Social; 
