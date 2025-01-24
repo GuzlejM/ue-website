@@ -150,7 +150,11 @@ const CustomAgentsPage = () => {
         <div className="max-w-5xl mx-auto mb-24">
           <h2 className={`section-title ${theme} text-center mb-16`}>Development Journey</h2>
           <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 primary-gradient"></div>
+            <div className={`absolute left-1/2 transform -translate-x-1/2 h-full ${
+              theme === 'light'
+                ? 'w-0.5 bg-primary'
+                : 'w-1 primary-gradient'
+            }`}></div>
             <div className="space-y-24">
               {[
                 {
