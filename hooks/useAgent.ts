@@ -1,14 +1,53 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { API_CONFIG } from '../config/api';
 
-export const useAgent = () => {
-  const [messages, setMessages] = useState([]);
-  const [userInput, setUserInput] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [thinkingSteps, setThinkingSteps] = useState([]);
-  const [currentStep, setCurrentStep] = useState(0);
+interface ToolOutput {
+  tool_id: string;
+  output?: string;
+  error?: string;
+  screenshot_path?: string;
+}
+
+interface ApiResponse {
+  thinking_steps?: string[];
+}
+
+interface ExecuteCommandResponse {
+  message?: string;
+  tool_outputs?: ToolOutput[];
+  api_response?: ApiResponse;
+}
+
+interface Message {
+  type: 'text' | 'user' | 'tool_use';
+  text?: string;
+  content?: string;
+  id?: string;
+  name?: string;
+  status?: 'completed' | 'error';
+  output?: string;
+  error?: string;
+  screenshot?: string;
+}
+
+interface UseAgentReturn {
+  messages: Message[];
+  userInput: string;
+  setUserInput: (input: string) => void;
+  isProcessing: boolean;
+  thinkingSteps: string[];
+  currentStep: number;
+  handleSubmit: (e: FormEvent) => Promise<void>;
+}
+
+export const useAgent = (): UseAgentReturn => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [userInput, setUserInput] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [thinkingSteps, setThinkingSteps] = useState<string[]>([]);
+  const [currentStep, setCurrentStep] = useState<number>(0);
 
   // Initialize with welcome message
   useEffect(() => {
@@ -20,7 +59,7 @@ export const useAgent = () => {
     ]);
   }, []);
 
-  const executeCommand = async (input) => {
+  const executeCommand = async (input: string): Promise<ExecuteCommandResponse> => {
     try {
       const apiKey = localStorage.getItem('anthropic_api_key');
       if (!apiKey) {
@@ -54,11 +93,11 @@ export const useAgent = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     if (!userInput.trim() || isProcessing) return;
     
-    const userMessage = {
+    const userMessage: Message = {
       type: 'user',
       content: userInput
     };
@@ -81,7 +120,7 @@ export const useAgent = () => {
       // Handle tool outputs
       if (response.tool_outputs && response.tool_outputs.length > 0) {
         response.tool_outputs.forEach(output => {
-          const toolMessage = {
+          const toolMessage: Message = {
             type: 'tool_use',
             id: output.tool_id,
             name: 'bash',
@@ -112,7 +151,7 @@ export const useAgent = () => {
     } catch (error) {
       setMessages(prev => [...prev, {
         type: 'text',
-        text: `Error: ${error.message}`
+        text: `Error: ${error instanceof Error ? error.message : 'An unknown error occurred'}`
       }]);
     } finally {
       setIsProcessing(false);
@@ -129,4 +168,4 @@ export const useAgent = () => {
     currentStep,
     handleSubmit
   };
-};
+}; 

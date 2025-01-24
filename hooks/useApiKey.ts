@@ -1,9 +1,17 @@
 import { useState, useEffect } from 'react';
 
-export const useApiKey = () => {
-  const [apiKey, setApiKey] = useState('');
-  const [isValidated, setIsValidated] = useState(false);
-  const [error, setError] = useState('');
+interface UseApiKeyReturn {
+  apiKey: string;
+  isValidated: boolean;
+  error: string;
+  validateApiKey: (key: string) => Promise<void>;
+  clearApiKey: () => void;
+}
+
+export const useApiKey = (): UseApiKeyReturn => {
+  const [apiKey, setApiKey] = useState<string>('');
+  const [isValidated, setIsValidated] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   // Check if API key exists in localStorage on mount
   useEffect(() => {
@@ -14,7 +22,7 @@ export const useApiKey = () => {
     }
   }, []);
 
-  const validateApiKey = async (key) => {
+  const validateApiKey = async (key: string): Promise<void> => {
     setError('');
 
     try {
@@ -28,12 +36,16 @@ export const useApiKey = () => {
       setApiKey(key);
       setIsValidated(true);
     } catch (err) {
-      setError(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unknown error occurred');
+      }
       setIsValidated(false);
     }
   };
 
-  const clearApiKey = () => {
+  const clearApiKey = (): void => {
     localStorage.removeItem('anthropic_api_key');
     setApiKey('');
     setIsValidated(false);

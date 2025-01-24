@@ -1,8 +1,13 @@
 import config from "@config/config.json";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
-const Logo = ({ src }) => {
+interface LogoProps {
+  src?: string;
+}
+
+const Logo: React.FC<LogoProps> = ({ src }) => {
   // destructuring items from config object
   const { base_url, logo, logo_width, logo_height, logo_text, title } =
     config.site;
@@ -12,14 +17,14 @@ const Logo = ({ src }) => {
       href={base_url}
       className="navbar-brand block py-1"
       style={{
-        height: logo_height.replace("px", "") + "px",
-        width: logo_width.replace("px", "") + "px",
+        height: `${parseInt(logo_height)}px`,
+        width: `${parseInt(logo_width)}px`,
       }}
     >
       {src || logo ? (
         <Image
-          width={logo_width.replace("px", "") * 2}
-          height={logo_height.replace("px", "") * 2}
+          width={parseInt(logo_width) * 2}
+          height={parseInt(logo_height) * 2}
           src={src ? src : logo}
           alt={title}
           priority
@@ -33,4 +38,4 @@ const Logo = ({ src }) => {
   );
 };
 
-export default Logo;
+export default Logo; 

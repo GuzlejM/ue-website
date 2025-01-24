@@ -1,15 +1,18 @@
 import Link from "next/link";
 import React from "react";
 
-const Pagination = ({ section, currentPage, totalPages }) => {
+interface PaginationProps {
+  section?: string;
+  currentPage: number;
+  totalPages: number;
+}
+
+const Pagination: React.FC<PaginationProps> = ({ section, currentPage, totalPages }) => {
   const indexPageLink = currentPage === 2;
   const hasPrevPage = currentPage > 1;
   const hasNextPage = totalPages > currentPage;
 
-  let pageList = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageList.push(i);
-  }
+  const pageList = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <>
@@ -74,20 +77,14 @@ const Pagination = ({ section, currentPage, totalPages }) => {
                 </span>
               ) : (
                 <Link
-                  legacyBehavior={true}
                   href={
                     i === 0
                       ? `${section ? "/" + section : "/"}`
                       : `${section ? "/" + section : ""}/page/${pagination}`
                   }
-                  passHref
+                  className={`rounded-md bg-theme-light px-4 py-2 text-dark hover:bg-primary hover:text-white`}
                 >
-                  <a
-                    aria-current="page"
-                    className={`rounded-md  bg-theme-light px-4 py-2 text-dark hover:bg-primary hover:text-white`}
-                  >
-                    {pagination}
-                  </a>
+                  {pagination}
                 </Link>
               )}
             </React.Fragment>
@@ -138,4 +135,4 @@ const Pagination = ({ section, currentPage, totalPages }) => {
   );
 };
 
-export default Pagination;
+export default Pagination; 
