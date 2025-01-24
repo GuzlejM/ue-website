@@ -1,6 +1,19 @@
 import { markdownify } from "@lib/utils/textConverter";
 
-const NotFound = ({ data }) => {
+interface NotFoundFrontmatter {
+  title: string;
+}
+
+interface NotFoundData {
+  frontmatter: NotFoundFrontmatter;
+  content: string;
+}
+
+interface NotFoundProps {
+  data: NotFoundData;
+}
+
+const NotFound: React.FC<NotFoundProps> = ({ data }) => {
   const { frontmatter, content } = data;
 
   return (
@@ -17,4 +30,4 @@ const NotFound = ({ data }) => {
   );
 };
 
-export default NotFound;
+export default NotFound; 

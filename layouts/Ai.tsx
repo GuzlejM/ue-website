@@ -1,15 +1,38 @@
 "use client";
 
 import { markdownify } from "@lib/utils/textConverter";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, FormEvent, KeyboardEvent } from "react";
 
-function Ai({ data }) {
+interface FAQ {
+  title: string;
+  answer: string;
+}
+
+interface AiFrontmatter {
+  title: string;
+  faqs: FAQ[];
+}
+
+interface AiData {
+  frontmatter: AiFrontmatter;
+}
+
+interface AiProps {
+  data: AiData;
+}
+
+interface Message {
+  question: string;
+  answer: string;
+}
+
+const Ai: React.FC<AiProps> = ({ data }) => {
   const { frontmatter } = data;
   const { title, faqs } = frontmatter;
-  const [userInput, setUserInput] = useState("");
-  const [messages, setMessages] = useState([]);
-  const messagesEndRef = useRef(null);
-  const chatContainerRef = useRef(null);
+  const [userInput, setUserInput] = useState<string>("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Initialize with all FAQs on component mount
   useEffect(() => {
@@ -40,11 +63,11 @@ function Ai({ data }) {
     }
   }, [messages, faqs.length]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!userInput.trim()) return;
     
-    const newMessage = {
+    const newMessage: Message = {
       question: userInput,
       answer: "I'm processing your request..."
     };
@@ -63,10 +86,10 @@ function Ai({ data }) {
     }, 1000);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e);
+      handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
     }
   };
 
@@ -119,6 +142,6 @@ function Ai({ data }) {
       </div>
     </section>
   );
-}
+};
 
-export default Ai;
+export default Ai; 

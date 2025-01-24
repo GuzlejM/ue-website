@@ -7,9 +7,37 @@ import { Autoplay, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.min.css";
 
-const Services = ({ data }) => {
+interface ServiceButton {
+  enable: boolean;
+  label: string;
+  link: string;
+}
+
+interface Service {
+  title: string;
+  content: string;
+  image?: string;
+  button: ServiceButton;
+}
+
+interface ServicesFrontmatter {
+  title: string;
+  description: string;
+  services: Service[];
+}
+
+interface ServicesData {
+  frontmatter: ServicesFrontmatter;
+}
+
+interface ServicesProps {
+  data: ServicesData;
+}
+
+const Services: React.FC<ServicesProps> = ({ data }) => {
   const { frontmatter } = data;
   const { title, description, services } = frontmatter;
+  
   return (
     <section className="section bg-white dark:bg-[#1a1c3b]">
       <div className="container">
@@ -63,4 +91,4 @@ const Services = ({ data }) => {
   );
 };
 
-export default Services;
+export default Services; 

@@ -1,8 +1,27 @@
 import { markdownify } from "@lib/utils/textConverter";
 
-function Faq({ data }) {
+interface FaqItem {
+  title: string;
+  answer: string;
+}
+
+interface FaqFrontmatter {
+  title: string;
+  faqs: FaqItem[];
+}
+
+interface FaqData {
+  frontmatter: FaqFrontmatter;
+}
+
+interface FaqProps {
+  data: FaqData;
+}
+
+const Faq: React.FC<FaqProps> = ({ data }) => {
   const { frontmatter } = data;
   const { title, faqs } = frontmatter;
+  
   return (
     <section className="section">
       <div className="container">
@@ -22,6 +41,6 @@ function Faq({ data }) {
       </div>
     </section>
   );
-}
+};
 
-export default Faq;
+export default Faq; 

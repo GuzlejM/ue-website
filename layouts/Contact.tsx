@@ -1,7 +1,26 @@
 import config from "@config/config.json";
 import { markdownify } from "@lib/utils/textConverter";
 
-const Contact = ({ data }) => {
+interface ContactInfo {
+  title: string;
+  description: string;
+  contacts: string[];
+}
+
+interface ContactFrontmatter {
+  title: string;
+  info: ContactInfo;
+}
+
+interface ContactData {
+  frontmatter: ContactFrontmatter;
+}
+
+interface ContactProps {
+  data: ContactData;
+}
+
+const Contact: React.FC<ContactProps> = ({ data }) => {
   const { frontmatter } = data;
   const { title, info } = frontmatter;
   const { contact_form_action } = config.params;
@@ -47,7 +66,7 @@ const Contact = ({ data }) => {
               <div className="mb-3">
                 <textarea
                   className="form-textarea w-full rounded-md"
-                  rows="7"
+                  rows={7}
                   placeholder="Your message"
                 />
               </div>
@@ -73,4 +92,4 @@ const Contact = ({ data }) => {
   );
 };
 
-export default Contact;
+export default Contact; 

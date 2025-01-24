@@ -1,7 +1,22 @@
 import { markdownify } from "@lib/utils/textConverter";
 import Image from "next/image";
 
-const HomeFeatures = ({ feature }) => {
+interface Feature {
+  icon?: string;
+  name: string;
+  content: string;
+}
+
+interface FeatureData {
+  title: string;
+  features: Feature[];
+}
+
+interface HomeFeaturesProps {
+  feature: FeatureData;
+}
+
+const HomeFeatures: React.FC<HomeFeaturesProps> = ({ feature }) => {
   return (
     <section className="section bg-theme-light">
       <div className="container">
@@ -35,4 +50,4 @@ const HomeFeatures = ({ feature }) => {
   );
 };
 
-export default HomeFeatures;
+export default HomeFeatures; 

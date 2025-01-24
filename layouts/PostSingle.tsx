@@ -4,9 +4,24 @@ import { markdownify } from "@lib/utils/textConverter";
 import shortcodes from "@shortcodes/all";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
+import { Theme } from "@context/ThemeContext";
 import SeoMeta from "./SeoMeta";
 
-const PostSingle = ({ frontmatter, content, theme }) => {
+interface PostFrontmatter {
+  description?: string;
+  title: string;
+  date: string;
+  image?: string;
+  categories?: string[];
+}
+
+interface PostSingleProps {
+  frontmatter: PostFrontmatter;
+  content: any; // MDX content type from next-mdx-remote
+  theme: Theme;
+}
+
+const PostSingle: React.FC<PostSingleProps> = ({ frontmatter, content, theme }) => {
   let { description, title, date, image, categories } = frontmatter;
   description = description ? description : content.slice(0, 120);
 
@@ -19,8 +34,8 @@ const PostSingle = ({ frontmatter, content, theme }) => {
             {image && (
               <Image
                 src={image}
-                height="500"
-                width="1000"
+                height={500}
+                width={1000}
                 alt={title}
                 priority={true}
                 className="rounded-lg"
@@ -51,4 +66,4 @@ const PostSingle = ({ frontmatter, content, theme }) => {
   );
 };
 
-export default PostSingle;
+export default PostSingle; 

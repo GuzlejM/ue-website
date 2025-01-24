@@ -4,16 +4,39 @@ import SeoMeta from "@layouts/SeoMeta";
 import { getListPage, getSinglePage } from "@lib/contentParser";
 import { markdownify } from "@lib/utils/textConverter";
 import Posts from "@partials/Posts";
+import { Theme } from "@context/ThemeContext";
 
 const { blog_folder } = config.settings;
 
+interface BlogPost {
+  frontmatter: {
+    date: string;
+    [key: string]: any;
+  };
+  slug: string;
+  content: string;
+}
+
+interface BlogPaginationParams {
+  params: {
+    slug?: string;
+  };
+}
+
+interface BlogPaginationContentProps {
+  title: string;
+  currentPosts: BlogPost[];
+  totalPages: number;
+  currentPage: number;
+}
+
 // blog pagination
-const BlogPagination = async ({ params }) => {
-  const currentPage = parseInt((params && params.slug) || 1);
+const BlogPagination = async ({ params }: BlogPaginationParams) => {
+  const currentPage = parseInt((params && params.slug) || "1");
   const { pagination } = config.settings;
   const posts = await getSinglePage(`content/${blog_folder}`).sort(
-    (post1, post2) =>
-      new Date(post2.frontmatter.date) - new Date(post1.frontmatter.date)
+    (post1: BlogPost, post2: BlogPost) =>
+      new Date(post2.frontmatter.date).getTime() - new Date(post1.frontmatter.date).getTime()
   );
   const postIndex = await getListPage(`content/${blog_folder}/_index.md`);
   
@@ -39,7 +62,12 @@ export default BlogPagination;
 
 import { useTheme } from "../../../../context/ThemeContext";
 
-const BlogPaginationContent = ({ title, currentPosts, totalPages, currentPage }) => {
+const BlogPaginationContent: React.FC<BlogPaginationContentProps> = ({ 
+  title, 
+  currentPosts, 
+  totalPages, 
+  currentPage 
+}) => {
   const { theme } = useTheme();
   
   return (
@@ -62,7 +90,7 @@ const BlogPaginationContent = ({ title, currentPosts, totalPages, currentPage })
 // get blog pagination slug
 export const generateStaticParams = async () => {
   const getAllSlug = await getSinglePage(`content/${blog_folder}`);
-  const allSlug = getAllSlug.map((item) => item.slug);
+  const allSlug = getAllSlug.map((item: BlogPost) => item.slug);
   const { pagination } = config.settings;
   const totalPages = Math.ceil(allSlug.length / pagination);
   let paths = [];
@@ -74,4 +102,4 @@ export const generateStaticParams = async () => {
   }
 
   return paths;
-};
+}; 

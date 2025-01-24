@@ -8,8 +8,28 @@ import { getRegularPage, getSinglePage } from "@lib/contentParser";
 import Ai from "@layouts/Ai";
 import AgentChat from "@layouts/AgentChat";
 
-// for all regular pages
-const RegularPages = async ({ params }) => {
+interface RegularPageParams {
+  params: {
+    regular: string;
+  };
+}
+
+interface RegularPageFrontmatter {
+  title: string;
+  meta_title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  canonical?: string;
+  layout?: string;
+}
+
+interface RegularPageData {
+  frontmatter: RegularPageFrontmatter;
+  content: string;
+}
+
+const RegularPages = async ({ params }: RegularPageParams) => {
   const { regular } = params;
   const regularPageData = await getRegularPage(regular);
   const { title, meta_title, description, image, noindex, canonical, layout } =
@@ -56,4 +76,4 @@ export const generateStaticParams = async () => {
   }));
 
   return paths;
-};
+}; 

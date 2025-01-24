@@ -1,9 +1,23 @@
 import { markdownify } from "@lib/utils/textConverter";
 import MDXContent from "app/helper/MDXContent";
 
-const Default = ({ data }) => {
+interface DefaultFrontmatter {
+  title: string;
+}
+
+interface DefaultData {
+  frontmatter: DefaultFrontmatter;
+  content: string;
+}
+
+interface DefaultProps {
+  data: DefaultData;
+}
+
+const Default: React.FC<DefaultProps> = ({ data }) => {
   const { frontmatter, content } = data;
   const { title } = frontmatter;
+  
   return (
     <section className="section">
       <div className="container">
@@ -16,4 +30,4 @@ const Default = ({ data }) => {
   );
 };
 
-export default Default;
+export default Default; 

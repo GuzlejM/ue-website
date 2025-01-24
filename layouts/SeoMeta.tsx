@@ -4,7 +4,16 @@ import config from "@config/config.json";
 import { plainify } from "@lib/utils/textConverter";
 import { usePathname } from "next/navigation";
 
-const SeoMeta = ({
+interface SeoMetaProps {
+  title: string;
+  meta_title?: string;
+  image?: string;
+  description?: string;
+  canonical?: string;
+  noindex?: boolean;
+}
+
+const SeoMeta: React.FC<SeoMetaProps> = ({
   title,
   meta_title,
   image,
@@ -87,4 +96,4 @@ const SeoMeta = ({
   );
 };
 
-export default SeoMeta;
+export default SeoMeta; 

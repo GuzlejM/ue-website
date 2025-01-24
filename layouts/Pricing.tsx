@@ -1,10 +1,41 @@
 import Link from "next/link";
 import Cta from "./components/Cta";
 
-function Pricing({ data }) {
+interface PricingButton {
+  label: string;
+  link: string;
+  rel?: string;
+}
+
+interface PricingPlan {
+  title: string;
+  price: number;
+  type: string;
+  subtitle: string;
+  features: string[];
+  button: PricingButton;
+  recommended?: boolean;
+}
+
+interface PricingFrontmatter {
+  title: string;
+  plans: PricingPlan[];
+  call_to_action: any; // Type will be defined by Cta component
+}
+
+interface PricingData {
+  frontmatter: PricingFrontmatter;
+}
+
+interface PricingProps {
+  data: PricingData;
+}
+
+const Pricing: React.FC<PricingProps> = ({ data }) => {
   const {
     frontmatter: { title, plans, call_to_action },
   } = data;
+  
   return (
     <>
       <section className="section pb-0">
@@ -52,6 +83,6 @@ function Pricing({ data }) {
       <Cta cta={call_to_action} />
     </>
   );
-}
+};
 
-export default Pricing;
+export default Pricing; 

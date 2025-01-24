@@ -1,7 +1,17 @@
 import { markdownify } from "@lib/utils/textConverter";
 import Image from "next/image";
 
-const Workflow = ({ workflow }) => {
+interface WorkflowData {
+  title: string;
+  description: string;
+  image: string;
+}
+
+interface WorkflowProps {
+  workflow: WorkflowData;
+}
+
+const Workflow: React.FC<WorkflowProps> = ({ workflow }) => {
   return (
     <section className="section pb-0">
       <div className="mb-8 text-center">
@@ -22,4 +32,4 @@ const Workflow = ({ workflow }) => {
   );
 };
 
-export default Workflow;
+export default Workflow; 

@@ -6,4 +6,4 @@ const notFound = async () => {
   return <NotFound data={notFoundData} />;
 };
 
-export default notFound;
+export default notFound; 

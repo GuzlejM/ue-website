@@ -8,7 +8,19 @@ import ApiKeyForm from "../components/agent/ApiKeyForm";
 import { useAgent } from "../hooks/useAgent";
 import { useApiKey } from "../hooks/useApiKey";
 
-function AgentChat({ data }) {
+interface AgentChatFrontmatter {
+  title: string;
+}
+
+interface AgentChatData {
+  frontmatter: AgentChatFrontmatter;
+}
+
+interface AgentChatProps {
+  data: AgentChatData | null;
+}
+
+const AgentChat: React.FC<AgentChatProps> = ({ data }) => {
   const { 
     messages, 
     userInput, 
@@ -25,7 +37,7 @@ function AgentChat({ data }) {
     validateApiKey
   } = useApiKey();
 
-  const chatContainerRef = useRef(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when messages update
   useEffect(() => {
@@ -100,6 +112,6 @@ function AgentChat({ data }) {
       </div>
     </section>
   );
-}
+};
 
 export default AgentChat; 

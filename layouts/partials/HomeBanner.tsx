@@ -2,7 +2,17 @@ import { markdownify } from "@lib/utils/textConverter";
 import Image from "next/image";
 import Link from "next/link";
 
-const HomeBanner = ({ banner }) => {
+interface Banner {
+  title: string;
+  content: string;
+  image: string;
+}
+
+interface HomeBannerProps {
+  banner: Banner;
+}
+
+const HomeBanner: React.FC<HomeBannerProps> = ({ banner }) => {
   return (
     <section className="section pb-[50px]">
       <div className="container relative">
@@ -47,4 +57,4 @@ const HomeBanner = ({ banner }) => {
   );
 };
 
-export default HomeBanner;
+export default HomeBanner; 
