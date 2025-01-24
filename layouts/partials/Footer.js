@@ -9,7 +9,7 @@ import Link from "next/link";
 const Footer = () => {
   const { footer } = menu;
   return (
-    <footer className="bg-white dark:bg-[#1a1c3b] mt-12 pt-12 pb-8 px-4">
+    <footer className="bg-white dark:bg-[#1a1c3b] pt-12 pb-8 px-4">
       <div className="container">
         <div className="row">
           <div className="mb-12 lg:mb-0 lg:col-3">

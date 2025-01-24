@@ -1,5 +1,13 @@
 .header {
-  @apply bg-white py-[14px] px-4 md:px-0 md:py-[9px];
+  @apply py-[14px] px-4 md:px-0 md:py-[9px] transition-colors;
+  
+  &.light {
+    @apply bg-white;
+  }
+  
+  &.dark {
+    @apply bg-[#1a1c3b];
+  }
 }
 
 // navbar items
@@ -8,7 +16,15 @@
 }
 
 .navbar-brand {
-  @apply text-xl font-semibold text-dark;
+  @apply text-xl font-semibold transition-colors;
+  
+  &.light {
+    @apply text-gray-900;
+  }
+  
+  &.dark {
+    @apply text-white;
+  }
 
   image {
     @apply max-h-full max-w-full;
@@ -32,9 +48,23 @@
 }
 
 .nav-link {
-  @apply py-3 px-2 font-primary text-base font-bold text-dark transition hover:text-primary md:py-4 lg:px-3;
+  @apply py-3 px-2 font-primary text-base font-bold transition;
+  
+  &.light {
+    @apply text-gray-900 hover:text-primary;
+  }
+  
+  &.dark {
+    @apply text-gray-200 hover:text-[#8ab4f8];
+  }
 
   &-active {
-    @apply text-primary;
+    &.light {
+      @apply text-primary;
+    }
+    
+    &.dark {
+      @apply text-[#8ab4f8];
+    }
   }
 }

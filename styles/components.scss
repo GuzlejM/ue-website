@@ -1,3 +1,127 @@
+// Variables
+$colors: (
+  primary: #0aa8a7,
+  primary-dark: #078280,
+  dark-bg: #1a1c3b,
+  dark-gradient-1: #2a3170,
+  dark-gradient-2: #4b3488,
+  dark-gradient-3: #7c3aaa,
+  gradient-blue: #8ab4f8,
+  gradient-purple: #c7a7ea,
+  gradient-pink: #f6a6c1,
+  gradient-orange: #ffa07a
+);
+
+$transitions: (
+  default: all 0.3s ease-in-out,
+  transform: transform 0.2s ease-in-out
+);
+
+$primary-gradient: linear-gradient(to right, #8ab4f8, #c7a7ea);
+$secondary-gradient: linear-gradient(to right, #c7a7ea, #f6a6c1);
+$transition-base: all 0.3s ease-in-out;
+
+// Mixins
+@mixin gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@mixin hover-scale {
+  transition: $transition-base;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+@mixin theme-aware($property, $light-value, $dark-value) {
+  #{$property}: $light-value;
+  .dark & {
+    #{$property}: $dark-value;
+  }
+}
+
+@mixin card-base {
+  @apply backdrop-blur-lg rounded-2xl p-8;
+  @include hover-scale;
+}
+
+@mixin flex-center {
+  @apply flex items-center justify-center;
+}
+
+// Animations
+@keyframes shine {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  animation: gradient 5s ease infinite;
+}
+
+// Stats Component
+.stats-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16;
+}
+
+.stats-card {
+  @apply backdrop-blur-lg rounded-2xl p-8 transition-all duration-300 hover:scale-105;
+  
+  &.light {
+    @apply bg-primary/5 hover:bg-primary/10;
+    
+    .number {
+      @apply text-primary;
+    }
+    
+    .label {
+      @apply text-gray-900;
+    }
+  }
+  
+  &.dark {
+    @apply bg-white/[0.03] hover:bg-white/[0.06];
+    
+    .number {
+      @apply bg-clip-text text-transparent bg-[length:200%] animate-gradient;
+      background-image: var(--gradient);
+    }
+    
+    .label {
+      @apply text-white/90;
+    }
+  }
+  
+  .number {
+    @apply text-4xl font-bold mb-2;
+  }
+  
+  .label {
+    @apply text-lg;
+  }
+}
+
+@keyframes shine {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: 200% center;
+  }
+}
+
 // section style
 .section {
   @apply pt-[70px] pb-[70px];
@@ -355,39 +479,6 @@
   }
 }
 
-// Stats styles
-.stats-grid {
-  @apply grid grid-cols-2 md:grid-cols-4 gap-8 mt-20;
-}
-
-.stat-card {
-  @apply text-center;
-  
-  .number {
-    @apply text-5xl font-bold mb-2;
-    
-    &.light {
-      @apply text-primary;
-    }
-    
-    &.dark {
-      @apply bg-gradient-to-r bg-clip-text text-transparent animate-gradient;
-    }
-  }
-  
-  .label {
-    @apply font-medium;
-    
-    &.light {
-      @apply text-gray-600;
-    }
-    
-    &.dark {
-      @apply text-gray-300;
-    }
-  }
-}
-
 // Services section
 .services-section {
   @apply relative py-32;
@@ -496,14 +587,58 @@
 
 // Features section
 .features-section {
-  @apply bg-[#1a1c3b] py-32;
+  @apply py-32;
+  
+  &.light {
+    @apply bg-white;
+  }
+  
+  &.dark {
+    background-color: map-get($colors, dark-bg);
+  }
 }
 
 .feature-card {
-  @apply bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 transition-all transform hover:scale-105;
+  @include card-base;
   
-  &:hover {
-    @apply from-[#2a3170]/70 to-[#4b3488]/70;
+  &.light {
+    background-color: rgba(map-get($colors, primary), 0.05);
+    
+    &:hover {
+      background-color: rgba(map-get($colors, primary), 0.1);
+    }
+    
+    .title {
+      @apply text-gray-900;
+    }
+    
+    .description {
+      @apply text-gray-600;
+    }
+  }
+  
+  &.dark {
+    background: linear-gradient(
+      to bottom right,
+      rgba(map-get($colors, dark-gradient-1), 0.5),
+      rgba(map-get($colors, dark-gradient-2), 0.5)
+    );
+    
+    &:hover {
+      background: linear-gradient(
+        to bottom right,
+        rgba(map-get($colors, dark-gradient-1), 0.7),
+        rgba(map-get($colors, dark-gradient-2), 0.7)
+      );
+    }
+    
+    .title {
+      @apply text-white;
+    }
+    
+    .description {
+      @apply text-gray-300;
+    }
   }
   
   .icon {
@@ -511,11 +646,11 @@
   }
   
   .title {
-    @apply text-xl font-semibold text-white mb-3;
+    @apply text-xl font-semibold mb-3;
   }
   
   .description {
-    @apply text-gray-400;
+    @apply text-base;
   }
 }
 
@@ -541,5 +676,17 @@
   
   &.dark {
     @apply bg-white text-[#2a3170] hover:bg-[#8ab4f8] hover:text-white;
+  }
+}
+
+.share-link {
+  @apply inline-flex h-9 w-9 items-center justify-center rounded-full text-lg transition-all;
+
+  &.light {
+    @apply bg-primary/10 text-primary hover:bg-primary hover:text-white;
+  }
+
+  &.dark {
+    @apply bg-[#2a3170]/50 text-white hover:bg-[#2a3170];
   }
 }

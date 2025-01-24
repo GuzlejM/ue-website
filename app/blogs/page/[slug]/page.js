@@ -4,11 +4,11 @@ import SeoMeta from "@layouts/SeoMeta";
 import { getListPage, getSinglePage } from "@lib/contentParser";
 import { markdownify } from "@lib/utils/textConverter";
 import Posts from "@partials/Posts";
+
 const { blog_folder } = config.settings;
 
 // blog pagination
 const BlogPagination = async ({ params }) => {
-  //
   const currentPage = parseInt((params && params.slug) || 1);
   const { pagination } = config.settings;
   const posts = await getSinglePage(`content/${blog_folder}`).sort(
@@ -16,7 +16,7 @@ const BlogPagination = async ({ params }) => {
       new Date(post2.frontmatter.date) - new Date(post1.frontmatter.date)
   );
   const postIndex = await getListPage(`content/${blog_folder}/_index.md`);
-  //
+  
   const indexOfLastPost = currentPage * pagination;
   const indexOfFirstPost = indexOfLastPost - pagination;
   const totalPages = Math.ceil(posts.length / pagination);
@@ -24,27 +24,43 @@ const BlogPagination = async ({ params }) => {
   const { frontmatter } = postIndex;
   const { title } = frontmatter;
 
-  return (
-    <>
-      <SeoMeta title={title} />
-      <section className="section">
-        <div className="container">
-          {markdownify(title, "h1", "h1 text-center font-normal text-[56px]")}
-          <Posts posts={currentPosts} />
-          <Pagination
-            section={blog_folder}
-            totalPages={totalPages}
-            currentPage={currentPage}
-          />
-        </div>
-      </section>
-    </>
-  );
+  return <BlogPaginationContent 
+    title={title}
+    currentPosts={currentPosts}
+    totalPages={totalPages}
+    currentPage={currentPage}
+  />;
 };
 
 export default BlogPagination;
 
-export async function generateStaticParams() {
+// Client component wrapper
+"use client";
+
+import { useTheme } from "../../../../context/ThemeContext";
+
+const BlogPaginationContent = ({ title, currentPosts, totalPages, currentPage }) => {
+  const { theme } = useTheme();
+  
+  return (
+    <section className={`services-section ${theme === 'dark' ? 'bg-darkmode text-white' : 'bg-light text-dark'}`}>
+      <div className="container">
+        <h1 className={`text-center mb-8 ${theme === 'dark' ? 'text-white' : 'text-dark'}`}>
+          {title}
+        </h1>
+        <Posts posts={currentPosts} />
+        <Pagination
+          section={blog_folder}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
+      </div>
+    </section>
+  );
+};
+
+// get blog pagination slug
+export const generateStaticParams = async () => {
   const getAllSlug = await getSinglePage(`content/${blog_folder}`);
   const allSlug = getAllSlug.map((item) => item.slug);
   const { pagination } = config.settings;
@@ -58,4 +74,4 @@ export async function generateStaticParams() {
   }
 
   return paths;
-}
+};

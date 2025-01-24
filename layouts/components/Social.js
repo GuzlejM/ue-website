@@ -7,8 +7,10 @@ import {
   IoLogoTwitter,
   IoLogoYoutube,
 } from "react-icons/io5";
+import { useTheme } from "../../context/ThemeContext";
 
 const Social = ({ className }) => {
+  const { theme } = useTheme();
   const social = config.social || {};
   const { facebook, twitter, linkedin, youtube } = social;
 
@@ -23,7 +25,11 @@ const Social = ({ className }) => {
             href={facebook}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary text-primary dark:border-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white dark:hover:border-white dark:hover:text-white transition-colors"
+            className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${
+              theme === 'light' 
+                ? 'border-primary text-primary hover:bg-primary hover:text-white' 
+                : 'border-gray-600 text-gray-400 hover:border-white hover:text-white'
+            }`}
           >
             <IoLogoFacebook size={16} />
           </a>
@@ -36,7 +42,11 @@ const Social = ({ className }) => {
             href={twitter}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary text-primary dark:border-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white dark:hover:border-white dark:hover:text-white transition-colors"
+            className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${
+              theme === 'light' 
+                ? 'border-primary text-primary hover:bg-primary hover:text-white' 
+                : 'border-gray-600 text-gray-400 hover:border-white hover:text-white'
+            }`}
           >
             <IoLogoTwitter size={16} />
           </a>
@@ -49,7 +59,11 @@ const Social = ({ className }) => {
             href={linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary text-primary dark:border-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white dark:hover:border-white dark:hover:text-white transition-colors"
+            className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${
+              theme === 'light' 
+                ? 'border-primary text-primary hover:bg-primary hover:text-white' 
+                : 'border-gray-600 text-gray-400 hover:border-white hover:text-white'
+            }`}
           >
             <IoLogoLinkedin size={16} />
           </a>
@@ -62,7 +76,11 @@ const Social = ({ className }) => {
             href={youtube}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-primary text-primary dark:border-gray-600 dark:text-gray-400 hover:bg-primary hover:text-white dark:hover:border-white dark:hover:text-white transition-colors"
+            className={`inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors ${
+              theme === 'light' 
+                ? 'border-primary text-primary hover:bg-primary hover:text-white' 
+                : 'border-gray-600 text-gray-400 hover:border-white hover:text-white'
+            }`}
           >
             <IoLogoYoutube size={16} />
           </a>

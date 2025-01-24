@@ -2,7 +2,6 @@
 
 import config from "@config/config.json";
 import SeoMeta from "@layouts/SeoMeta";
-import Services from "@layouts/partials/Services";
 import Link from "next/link";
 import { useTheme } from "../context/ThemeContext";
 
@@ -11,33 +10,39 @@ const Stats = ({ theme }) => {
     { 
       number: "100+", 
       label: "AI Agents Deployed", 
-      gradient: "from-[#8ab4f8] to-[#c7a7ea]"
+      gradient: "linear-gradient(to right, #8ab4f8, #c7a7ea, #f6a6c1)"
     },
     { 
       number: "95%", 
       label: "Client Satisfaction", 
-      gradient: "from-[#c7a7ea] to-[#f6a6c1]"
+      gradient: "linear-gradient(to right, #c7a7ea, #f6a6c1, #ffa07a)"
     },
     { 
       number: "50+", 
       label: "Expert Developers", 
-      gradient: "from-[#f6a6c1] to-[#ffa07a]"
+      gradient: "linear-gradient(to right, #f6a6c1, #ffa07a, #8ab4f8)"
     },
     { 
       number: "24/7", 
       label: "Support Available", 
-      gradient: "from-[#ffa07a] to-[#8ab4f8]"
+      gradient: "linear-gradient(to right, #ffa07a, #8ab4f8, #c7a7ea)"
     }
   ];
 
   return (
     <div className="stats-grid">
       {stats.map((stat, index) => (
-        <div key={index} className="stat-card">
-          <div className={`number ${theme}`} style={theme === 'dark' ? {backgroundImage: `linear-gradient(to right, ${stat.gradient.split(' ')[1]}, ${stat.gradient.split(' ')[3]})`} : {}}>
+        <div 
+          key={index} 
+          className={`stats-card ${theme}`}
+          style={theme === 'dark' ? { '--gradient': stat.gradient } : {}}
+        >
+          <div className="number">
             {stat.number}
           </div>
-          <div className={`label ${theme}`}>{stat.label}</div>
+          <div className="label">
+            {stat.label}
+          </div>
         </div>
       ))}
     </div>
@@ -183,13 +188,13 @@ const Home = () => {
       </div>
 
       {/* Features Grid */}
-      <div className="features-section">
+      <div className={`features-section ${theme}`}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <div className={`badge dark`}>
-              <span className="dark">Why Choose Us</span>
+            <div className={`badge ${theme}`}>
+              <span className={theme}>Why Choose Us</span>
             </div>
-            <h2 className="section-title dark">Our Capabilities</h2>
+            <h2 className={`section-title ${theme}`}>Our Capabilities</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -224,10 +229,10 @@ const Home = () => {
                 description: "Round-the-clock support and maintenance for your AI solutions."
               }
             ].map((feature, index) => (
-              <div key={index} className="group feature-card">
+              <div key={index} className={`group feature-card ${theme}`}>
                 <div className="icon">{feature.icon}</div>
-                <h3 className="title">{feature.title}</h3>
-                <p className="description">{feature.description}</p>
+                <h3 className={`title ${theme}`}>{feature.title}</h3>
+                <p className={`description ${theme}`}>{feature.description}</p>
               </div>
             ))}
           </div>
