@@ -690,3 +690,21 @@ $transition-base: all 0.3s ease-in-out;
     @apply bg-[#2a3170]/50 text-white hover:bg-[#2a3170];
   }
 }
+
+// Gradient Classes
+.primary-gradient {
+  background: linear-gradient(to right, map-get($colors, gradient-blue), map-get($colors, gradient-purple));
+}
+
+.secondary-gradient {
+  background: linear-gradient(to right, map-get($colors, gradient-purple), map-get($colors, gradient-pink));
+}
+
+.gradient-text {
+  @include gradient-text;
+  background-image: linear-gradient(to right, map-get($colors, gradient-blue), map-get($colors, gradient-purple), map-get($colors, gradient-pink));
+}
+
+.hover-scale {
+  @include hover-scale;
+}

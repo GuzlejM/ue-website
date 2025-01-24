@@ -1,21 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTheme } from "../../../context/ThemeContext";
 
 const AgencyPage = () => {
+  const { theme } = useTheme();
+  
   return (
-    <div className="bg-[#1a1c3b] min-h-screen pt-32 text-white">
-      {/* Hero Section */}
+    <div className={`services-section ${theme}`}>
+      <div className={`services-background ${theme}`} />
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <div className="inline-block mb-4 px-6 py-2 bg-white/10 backdrop-blur-lg rounded-full">
-            <span className="text-sm font-medium text-gray-200">Agent Agency</span>
+          <div className={`badge ${theme}`}>
+            <span className={theme}>AI Agency</span>
           </div>
-          <h1 className="text-5xl font-bold mb-8 bg-gradient-to-r from-[#8ab4f8] via-[#c7a7ea] to-[#f6a6c1] bg-clip-text text-transparent">
-            Your One-Stop AI Agency Solution
+          <h1 className={`heading-gradient ${theme}`}>
+            Full-Service AI Development Agency
           </h1>
-          <p className="text-xl text-gray-300 leading-relaxed">
-            We handle the entire lifecycle of AI agents, from conception to optimization, ensuring your business gets the most out of AI technology.
+          <p className={`section-description ${theme}`}>
+            Your partner in building and deploying cutting-edge AI solutions that drive business growth.
           </p>
         </div>
 
@@ -24,32 +27,32 @@ const AgencyPage = () => {
           {[
             {
               title: "Strategy & Planning",
-              description: "Comprehensive AI strategy aligned with your business objectives and market demands.",
-              icon: "📋"
+              description: "Develop comprehensive AI strategies aligned with your business goals.",
+              icon: "🎯"
             },
             {
               title: "Agent Development",
-              description: "End-to-end development of custom AI agents tailored to your specific needs.",
-              icon: "⚙️"
+              description: "Custom AI agent development tailored to your specific needs.",
+              icon: "🤖"
             },
             {
               title: "Integration Services",
-              description: "Seamless integration of AI agents with your existing systems and workflows.",
+              description: "Seamless integration of AI solutions into your existing systems.",
               icon: "🔄"
             },
             {
               title: "Training & Optimization",
-              description: "Continuous training and performance optimization of your AI agents.",
+              description: "Expert training and fine-tuning of AI models for optimal performance.",
               icon: "📈"
             },
             {
               title: "Maintenance & Support",
-              description: "24/7 monitoring and support to ensure optimal agent performance.",
+              description: "Ongoing maintenance and support to ensure continuous operation.",
               icon: "🛠️"
             },
             {
               title: "Scaling & Growth",
-              description: "Strategic scaling of your AI capabilities as your business grows.",
+              description: "Scale your AI solutions as your business grows.",
               icon: "🚀"
             }
           ].map((service, index) => (
@@ -58,35 +61,46 @@ const AgencyPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="group bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg rounded-2xl p-8 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70 transition-all transform hover:scale-105"
+              className="group relative"
             >
-              <div className="text-4xl mb-4">{service.icon}</div>
-              <h3 className="text-xl font-semibold text-white mb-3">{service.title}</h3>
-              <p className="text-gray-400">{service.description}</p>
+              <div className={`absolute inset-0 rounded-2xl blur-lg transform group-hover:scale-105 transition-transform ${
+                theme === 'light' 
+                  ? 'bg-primary/5' 
+                  : 'bg-gradient-to-br from-gradient-blue/20 via-gradient-purple/20 to-gradient-pink/20'
+              }`}></div>
+              <div className={`service-card ${theme} relative transform group-hover:scale-[1.02] transition-all`}>
+                <div className="text-4xl mb-4">{service.icon}</div>
+                <h3 className={`title ${theme}`}>{service.title}</h3>
+                <p className={`content ${theme}`}>{service.description}</p>
+              </div>
             </motion.div>
           ))}
         </div>
 
         {/* Benefits Section */}
         <div className="max-w-4xl mx-auto mb-24">
-          <h2 className="text-4xl font-bold text-center mb-12">Why Choose Our Agency?</h2>
-          <div className="space-y-8">
+          <h2 className={`section-title ${theme} text-center mb-12`}>Why Choose Our Agency</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
                 title: "Expert Team",
-                description: "Access to a team of AI specialists, developers, and consultants with proven expertise."
+                description: "Seasoned AI developers and engineers with proven track record.",
+                icon: "👥"
               },
               {
                 title: "End-to-End Service",
-                description: "Complete management of your AI initiatives from strategy to implementation and beyond."
+                description: "Complete solution from strategy to deployment and maintenance.",
+                icon: "🔄"
               },
               {
                 title: "Cutting-Edge Technology",
-                description: "Utilization of the latest AI technologies and best practices in the industry."
+                description: "Access to the latest AI technologies and best practices.",
+                icon: "💡"
               },
               {
                 title: "Scalable Solutions",
-                description: "Flexible solutions that grow with your business needs and requirements."
+                description: "Solutions that grow with your business needs.",
+                icon: "📈"
               }
             ].map((benefit, index) => (
               <motion.div
@@ -94,34 +108,41 @@ const AgencyPage = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-gradient-to-br from-[#2a3170]/30 to-[#4b3488]/30 rounded-xl p-6"
+                className="group relative"
               >
-                <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-gray-400">{benefit.description}</p>
+                <div className={`absolute inset-0 rounded-2xl blur-lg transform group-hover:scale-105 transition-transform ${
+                  theme === 'light' 
+                    ? 'bg-primary/5' 
+                    : 'bg-gradient-to-br from-gradient-blue/20 via-gradient-purple/20 to-gradient-pink/20'
+                }`}></div>
+                <div className={`service-card ${theme} relative transform group-hover:scale-[1.02] transition-all`}>
+                  <div className="text-4xl mb-4">{benefit.icon}</div>
+                  <h3 className={`title ${theme}`}>{benefit.title}</h3>
+                  <p className={`content ${theme}`}>{benefit.description}</p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
 
         {/* CTA Section */}
-        <div className="text-center mb-24">
-          <h2 className="text-4xl font-bold mb-8">Ready to Transform Your Business?</h2>
-          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            Let&apos;s discuss how our agency can help you leverage AI technology for business growth.
-          </p>
-          <a
-            href="/contact"
-            className="inline-flex items-center justify-center gap-2 bg-gradient-to-br from-[#2a3170]/50 to-[#4b3488]/50 backdrop-blur-lg text-white font-semibold px-8 py-4 rounded-xl transition-all transform hover:scale-105 hover:from-[#2a3170]/70 hover:to-[#4b3488]/70"
-          >
-            Get Started
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
+        <div className={`cta-section ${theme} mb-24`}>
+          <div className="container mx-auto px-4 text-center">
+            <h2 className={`section-title ${theme} mb-6`}>Ready to Build Your AI Solution?</h2>
+            <p className={`section-description ${theme} mb-12 max-w-2xl mx-auto`}>
+              Let&apos;s discuss how our agency can help bring your AI vision to life.
+            </p>
+            <a href="/contact" className={`primary-button ${theme}`}>
+              Get Started
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default AgencyPage; 
+export default AgencyPage;
