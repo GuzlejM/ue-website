@@ -79,7 +79,7 @@ const AgentChat: React.FC<AgentChatProps> = ({ data }) => {
                 {thinkingSteps.map((step, index) => (
                   <ThinkingIndicator 
                     key={index}
-                    thinking={step.text}
+                    thinking={step}
                     isProcessing={isProcessing && index === thinkingSteps.length - 1}
                     currentStep={currentStep}
                   />

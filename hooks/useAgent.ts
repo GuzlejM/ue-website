@@ -20,17 +20,32 @@ interface ExecuteCommandResponse {
   api_response?: ApiResponse;
 }
 
-interface Message {
-  type: 'text' | 'user' | 'tool_use';
-  text?: string;
-  content?: string;
-  id?: string;
-  name?: string;
-  status?: 'completed' | 'error';
+type MessageStatus = 'running' | 'completed' | 'error';
+
+interface BaseMessage {
+  type: 'text' | 'tool_use' | 'user';
+}
+
+interface TextMessage extends BaseMessage {
+  type: 'text';
+  text: string;
+}
+
+interface ToolUseMessage extends BaseMessage {
+  type: 'tool_use';
+  status: MessageStatus;
+  tool_id?: string;
   output?: string;
   error?: string;
   screenshot?: string;
 }
+
+interface UserMessage extends BaseMessage {
+  type: 'user';
+  content: string;
+}
+
+type Message = TextMessage | ToolUseMessage | UserMessage;
 
 interface UseAgentReturn {
   messages: Message[];
@@ -97,7 +112,7 @@ export const useAgent = (): UseAgentReturn => {
     e.preventDefault();
     if (!userInput.trim() || isProcessing) return;
     
-    const userMessage: Message = {
+    const userMessage: UserMessage = {
       type: 'user',
       content: userInput
     };
@@ -111,34 +126,24 @@ export const useAgent = (): UseAgentReturn => {
       
       // Update messages with the response
       if (response.message) {
-        setMessages(prev => [...prev, {
+        const textMessage: TextMessage = {
           type: 'text',
           text: response.message
-        }]);
+        };
+        setMessages(prev => [...prev, textMessage]);
       }
 
       // Handle tool outputs
       if (response.tool_outputs && response.tool_outputs.length > 0) {
         response.tool_outputs.forEach(output => {
-          const toolMessage: Message = {
+          const toolMessage: ToolUseMessage = {
             type: 'tool_use',
-            id: output.tool_id,
-            name: 'bash',
-            status: 'completed',
+            status: output.error ? 'error' : 'completed',
+            tool_id: output.tool_id,
+            output: output.output,
+            error: output.error,
+            screenshot: output.screenshot_path
           };
-
-          if (output.output) {
-            toolMessage.output = output.output;
-          }
-
-          if (output.error) {
-            toolMessage.error = output.error;
-            toolMessage.status = 'error';
-          }
-
-          if (output.screenshot_path) {
-            toolMessage.screenshot = output.screenshot_path;
-          }
 
           setMessages(prev => [...prev, toolMessage]);
         });
@@ -149,10 +154,11 @@ export const useAgent = (): UseAgentReturn => {
         setThinkingSteps(response.api_response.thinking_steps);
       }
     } catch (error) {
-      setMessages(prev => [...prev, {
+      const errorMessage: TextMessage = {
         type: 'text',
         text: `Error: ${error instanceof Error ? error.message : 'An unknown error occurred'}`
-      }]);
+      };
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsProcessing(false);
       setCurrentStep(0); // Reset current step

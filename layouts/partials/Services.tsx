@@ -3,9 +3,10 @@
 import { markdownify } from "@lib/utils/textConverter";
 import Image from "next/image";
 import Link from "next/link";
-import { Autoplay, Pagination } from "swiper";
+import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper.min.css";
+import "swiper/css";
+import "swiper/css/pagination";
 
 interface ServiceButton {
   enable: boolean;
@@ -16,7 +17,7 @@ interface ServiceButton {
 interface Service {
   title: string;
   content: string;
-  image?: string;
+  image: string;
   button: ServiceButton;
 }
 
@@ -46,45 +47,40 @@ const Services: React.FC<ServicesProps> = ({ data }) => {
           <p className="mt-4 text-gray-600 dark:text-gray-300">{markdownify(description)}</p>
         </div>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              className="group rounded-xl bg-theme-light dark:bg-[#2a3170]/50 p-6 transition-all duration-200 hover:shadow-lg dark:hover:shadow-[#4b3488]/20"
-            >
-              {service.image && (
-                <Image
-                  className="mx-auto mb-6"
-                  src={service.image}
-                  width={80}
-                  height={80}
-                  alt={service.title}
-                />
-              )}
-              <h3 className="h4 mb-4 text-dark dark:text-white">{markdownify(service.title)}</h3>
-              <p className="text-gray-600 dark:text-gray-300">{markdownify(service.content)}</p>
-              {service.button.enable && (
-                <Link
-                  href={service.button.link}
-                  className="mt-4 inline-flex items-center text-primary dark:text-white hover:text-primary-dark dark:hover:text-primary transition-colors"
-                >
-                  {service.button.label}
-                  <svg
-                    className="ml-1 h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            pagination={{ clickable: true }}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+            grabCursor={true}
+            className="services-slider"
+          >
+            {services.map((service, index) => (
+              <SwiperSlide key={index}>
+                <div className="service-item">
+                  <div className="service-image">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      width={445}
+                      height={230}
                     />
-                  </svg>
-                </Link>
-              )}
-            </div>
-          ))}
+                  </div>
+                  <div className="service-content">
+                    <h3>{service.title}</h3>
+                    <p>{service.content}</p>
+                    {service.button.enable && (
+                      <Link href={service.button.link} className="btn btn-primary">
+                        {service.button.label}
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>

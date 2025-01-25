@@ -9,10 +9,7 @@
 
   "settings": {
     "theme_switcher": true,
-    "theme_default": "dark",
-    "pagination": 6,
-    "summary_length": 200,
-    "blog_folder": "blogs"
+    "theme_default": "dark"
   },
 
   "nav_button": {
