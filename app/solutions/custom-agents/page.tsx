@@ -3,8 +3,70 @@
 import { motion } from "framer-motion";
 import { useTheme } from "../../../context/ThemeContext";
 
+interface Capability {
+  title: string;
+  description: string;
+  features: string[];
+  icon: string;
+}
+
+interface DevelopmentPhase {
+  phase: string;
+  description: string;
+  details: string[];
+  icon: string;
+}
+
 const CustomAgentsPage = () => {
   const { theme } = useTheme();
+
+  const capabilities: Capability[] = [
+    {
+      title: "Conversational AI",
+      description: "Natural language understanding and generation for human-like interactions.",
+      features: ["Context awareness", "Multi-language support", "Sentiment analysis"],
+      icon: "💬"
+    },
+    {
+      title: "Task Automation",
+      description: "Automate repetitive tasks and complex workflows with intelligent agents.",
+      features: ["Process automation", "Decision making", "Error handling"],
+      icon: "⚡"
+    },
+    {
+      title: "Data Analysis",
+      description: "Extract insights and patterns from your data with AI-powered analysis.",
+      features: ["Pattern recognition", "Predictive modeling", "Anomaly detection"],
+      icon: "📊"
+    }
+  ];
+
+  const developmentPhases: DevelopmentPhase[] = [
+    {
+      phase: "Discovery",
+      description: "Understanding your needs and defining agent requirements",
+      details: ["Business analysis", "Use case definition", "Technical requirements"],
+      icon: "🔍"
+    },
+    {
+      phase: "Design",
+      description: "Creating the perfect architecture for your AI agent",
+      details: ["Agent architecture", "Integration design", "Security planning"],
+      icon: "✏️"
+    },
+    {
+      phase: "Development",
+      description: "Building and training your custom AI agent",
+      details: ["Model development", "Training & testing", "Performance optimization"],
+      icon: "💻"
+    },
+    {
+      phase: "Deployment",
+      description: "Launching your agent in a production environment",
+      details: ["System integration", "Performance monitoring", "User training"],
+      icon: "🚀"
+    }
+  ];
   
   return (
     <div className={`services-section ${theme}`}>
@@ -88,26 +150,7 @@ const CustomAgentsPage = () => {
         <div id="capabilities" className="mb-24">
           <h2 className={`section-title ${theme} text-center mb-16`}>Agent Capabilities</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Conversational AI",
-                description: "Natural language understanding and generation for human-like interactions.",
-                features: ["Context awareness", "Multi-language support", "Sentiment analysis"],
-                icon: "💬"
-              },
-              {
-                title: "Task Automation",
-                description: "Automate repetitive tasks and complex workflows with intelligent agents.",
-                features: ["Process automation", "Decision making", "Error handling"],
-                icon: "⚡"
-              },
-              {
-                title: "Data Analysis",
-                description: "Extract insights and patterns from your data with AI-powered analysis.",
-                features: ["Pattern recognition", "Predictive modeling", "Anomaly detection"],
-                icon: "📊"
-              }
-            ].map((capability, index) => (
+            {capabilities.map((capability, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -156,32 +199,7 @@ const CustomAgentsPage = () => {
                 : 'w-1 primary-gradient'
             }`}></div>
             <div className="space-y-24">
-              {[
-                {
-                  phase: "Discovery",
-                  description: "Understanding your needs and defining agent requirements",
-                  details: ["Business analysis", "Use case definition", "Technical requirements"],
-                  icon: "🔍"
-                },
-                {
-                  phase: "Design",
-                  description: "Creating the perfect architecture for your AI agent",
-                  details: ["Agent architecture", "Integration design", "Security planning"],
-                  icon: "✏️"
-                },
-                {
-                  phase: "Development",
-                  description: "Building and training your custom AI agent",
-                  details: ["Model development", "Training & testing", "Performance optimization"],
-                  icon: "💻"
-                },
-                {
-                  phase: "Deployment",
-                  description: "Launching your agent in a production environment",
-                  details: ["System integration", "Performance monitoring", "User training"],
-                  icon: "🚀"
-                }
-              ].map((phase, index) => (
+              {developmentPhases.map((phase, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}

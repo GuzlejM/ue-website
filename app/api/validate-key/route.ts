@@ -1,8 +1,18 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request) {
+interface ValidateKeyRequest {
+  api_key: string;
+}
+
+interface AnthropicErrorResponse {
+  error?: {
+    message: string;
+  };
+}
+
+export async function POST(request: NextRequest) {
   try {
-    const { api_key } = await request.json();
+    const { api_key } = await request.json() as ValidateKeyRequest;
 
     if (!api_key) {
       return NextResponse.json(
@@ -27,7 +37,7 @@ export async function POST(request) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorData = await response.json().catch(() => ({} as AnthropicErrorResponse));
       console.error('Anthropic API Error:', errorData);
       return NextResponse.json(
         { error: errorData.error?.message || 'Invalid API key' },

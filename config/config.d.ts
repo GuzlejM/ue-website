@@ -28,6 +28,7 @@ declare module "@config/config.json" {
     tag_manager_id: string;
     footer_content: string;
     copyright: string;
+    copyright_company: string;
   }
 
   interface Metadata {

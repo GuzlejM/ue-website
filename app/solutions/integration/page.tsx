@@ -3,8 +3,62 @@
 import { motion } from "framer-motion";
 import { useTheme } from "../../../context/ThemeContext";
 
+interface IntegrationType {
+  title: string;
+  description: string;
+  features: string[];
+  icon: string;
+}
+
 const IntegrationPage = () => {
   const { theme } = useTheme();
+
+  const integrationTypes: IntegrationType[] = [
+    {
+      title: "API Integration",
+      description: "Connect with any third-party API",
+      features: [
+        "RESTful API support",
+        "GraphQL integration",
+        "Custom endpoints",
+        "Rate limiting"
+      ],
+      icon: "🔌"
+    },
+    {
+      title: "Database Integration",
+      description: "Connect with various database systems",
+      features: [
+        "SQL databases",
+        "NoSQL support",
+        "Data migration",
+        "Real-time sync"
+      ],
+      icon: "💾"
+    },
+    {
+      title: "Cloud Integration",
+      description: "Seamless cloud service integration",
+      features: [
+        "AWS services",
+        "Google Cloud",
+        "Azure integration",
+        "Multi-cloud support"
+      ],
+      icon: "☁️"
+    },
+    {
+      title: "Legacy System Integration",
+      description: "Connect modern AI with legacy systems",
+      features: [
+        "Legacy system support",
+        "Data transformation",
+        "Protocol adaptation",
+        "Performance tuning"
+      ],
+      icon: "🏢"
+    }
+  ];
   
   return (
     <div className={`services-section ${theme}`}>
@@ -31,52 +85,7 @@ const IntegrationPage = () => {
 
         {/* Integration Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            {
-              title: "API Integration",
-              description: "Connect with any third-party API",
-              features: [
-                "RESTful API support",
-                "GraphQL integration",
-                "Custom endpoints",
-                "Rate limiting"
-              ],
-              icon: "🔌"
-            },
-            {
-              title: "Database Integration",
-              description: "Connect with various database systems",
-              features: [
-                "SQL databases",
-                "NoSQL support",
-                "Data migration",
-                "Real-time sync"
-              ],
-              icon: "💾"
-            },
-            {
-              title: "Cloud Integration",
-              description: "Seamless cloud service integration",
-              features: [
-                "AWS services",
-                "Google Cloud",
-                "Azure integration",
-                "Multi-cloud support"
-              ],
-              icon: "☁️"
-            },
-            {
-              title: "Legacy System Integration",
-              description: "Connect modern AI with legacy systems",
-              features: [
-                "Legacy system support",
-                "Data transformation",
-                "Protocol adaptation",
-                "Performance tuning"
-              ],
-              icon: "🏢"
-            }
-          ].map((type, index) => (
+          {integrationTypes.map((type, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}

@@ -46,6 +46,7 @@ const Footer: React.FC = () => {
           <p className="text-sm text-center text-gray-600 dark:text-gray-400">
             {config.params.copyright}
           </p>
+          <p className="text-sm text-center text-gray-600 dark:text-gray-400">{config.params.copyright_company}</p>
         </div>
       </div>
     </footer>

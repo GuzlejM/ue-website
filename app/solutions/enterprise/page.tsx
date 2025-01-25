@@ -3,8 +3,115 @@
 import { motion } from "framer-motion";
 import { useTheme } from "../../../context/ThemeContext";
 
+interface Benefit {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface UseCase {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface EnterpriseFeature {
+  title: string;
+  description: string;
+  features: string[];
+}
+
 const EnterprisePage = () => {
   const { theme } = useTheme();
+
+  const benefits: Benefit[] = [
+    {
+      title: "Scalable Infrastructure",
+      description: "Enterprise-grade infrastructure that grows with your business needs.",
+      icon: "🏢"
+    },
+    {
+      title: "Data Security",
+      description: "Advanced security measures to protect sensitive enterprise data.",
+      icon: "🔐"
+    },
+    {
+      title: "Custom Integration",
+      description: "Seamless integration with existing enterprise systems.",
+      icon: "🔄"
+    },
+    {
+      title: "Analytics Dashboard",
+      description: "Real-time insights and performance monitoring capabilities.",
+      icon: "📊"
+    },
+    {
+      title: "Compliance Ready",
+      description: "Built to meet industry regulations and compliance standards.",
+      icon: "✅"
+    },
+    {
+      title: "24/7 Support",
+      description: "Dedicated enterprise support team available round the clock.",
+      icon: "🛟"
+    }
+  ];
+
+  const useCases: UseCase[] = [
+    {
+      title: "Process Automation",
+      description: "Automate complex business processes with intelligent AI systems.",
+      icon: "⚙️"
+    },
+    {
+      title: "Customer Intelligence",
+      description: "Gain deep insights into customer behavior and preferences.",
+      icon: "🎯"
+    },
+    {
+      title: "Risk Management",
+      description: "Predict and mitigate business risks with AI-powered analytics.",
+      icon: "⚠️"
+    },
+    {
+      title: "Resource Optimization",
+      description: "Optimize resource allocation and improve operational efficiency.",
+      icon: "📈"
+    }
+  ];
+
+  const features: EnterpriseFeature[] = [
+    {
+      title: "Advanced Security",
+      description: "Enterprise-grade security with encryption, access controls, and audit trails.",
+      features: [
+        "End-to-end encryption",
+        "Role-based access control",
+        "Security compliance",
+        "Regular security audits"
+      ]
+    },
+    {
+      title: "Scalable Architecture",
+      description: "Highly scalable infrastructure designed for enterprise workloads.",
+      features: [
+        "Load balancing",
+        "Auto-scaling",
+        "High availability",
+        "Disaster recovery"
+      ]
+    },
+    {
+      title: "Integration Capabilities",
+      description: "Seamless integration with existing enterprise systems and workflows.",
+      features: [
+        "API integration",
+        "Custom connectors",
+        "Data synchronization",
+        "Legacy system support"
+      ]
+    }
+  ];
   
   return (
     <div className={`services-section ${theme}`}>
@@ -24,38 +131,7 @@ const EnterprisePage = () => {
 
         {/* Benefits Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-          {[
-            {
-              title: "Scalable Infrastructure",
-              description: "Enterprise-grade infrastructure that grows with your business needs.",
-              icon: "🏢"
-            },
-            {
-              title: "Data Security",
-              description: "Advanced security measures to protect sensitive enterprise data.",
-              icon: "🔐"
-            },
-            {
-              title: "Custom Integration",
-              description: "Seamless integration with existing enterprise systems.",
-              icon: "🔄"
-            },
-            {
-              title: "Analytics Dashboard",
-              description: "Real-time insights and performance monitoring capabilities.",
-              icon: "📊"
-            },
-            {
-              title: "Compliance Ready",
-              description: "Built to meet industry regulations and compliance standards.",
-              icon: "✅"
-            },
-            {
-              title: "24/7 Support",
-              description: "Dedicated enterprise support team available round the clock.",
-              icon: "🛟"
-            }
-          ].map((benefit, index) => (
+          {benefits.map((benefit, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -81,28 +157,7 @@ const EnterprisePage = () => {
         <div className="max-w-4xl mx-auto mb-24">
           <h2 className={`section-title ${theme} text-center mb-12`}>Enterprise Use Cases</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                title: "Process Automation",
-                description: "Automate complex business processes with intelligent AI systems.",
-                icon: "⚙️"
-              },
-              {
-                title: "Customer Intelligence",
-                description: "Gain deep insights into customer behavior and preferences.",
-                icon: "🎯"
-              },
-              {
-                title: "Risk Management",
-                description: "Predict and mitigate business risks with AI-powered analytics.",
-                icon: "⚠️"
-              },
-              {
-                title: "Resource Optimization",
-                description: "Optimize resource allocation and improve operational efficiency.",
-                icon: "📈"
-              }
-            ].map((useCase, index) => (
+            {useCases.map((useCase, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -129,38 +184,7 @@ const EnterprisePage = () => {
         <div className="max-w-4xl mx-auto mb-24">
           <h2 className={`section-title ${theme} text-center mb-12`}>Enterprise Features</h2>
           <div className="space-y-8">
-            {[
-              {
-                title: "Advanced Security",
-                description: "Enterprise-grade security with encryption, access controls, and audit trails.",
-                features: [
-                  "End-to-end encryption",
-                  "Role-based access control",
-                  "Security compliance",
-                  "Regular security audits"
-                ]
-              },
-              {
-                title: "Scalable Architecture",
-                description: "Highly scalable infrastructure designed for enterprise workloads.",
-                features: [
-                  "Load balancing",
-                  "Auto-scaling",
-                  "High availability",
-                  "Disaster recovery"
-                ]
-              },
-              {
-                title: "Integration Capabilities",
-                description: "Seamless integration with existing enterprise systems and workflows.",
-                features: [
-                  "API integration",
-                  "Custom connectors",
-                  "Data synchronization",
-                  "Legacy system support"
-                ]
-              }
-            ].map((feature, index) => (
+            {features.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}

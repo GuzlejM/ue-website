@@ -1,8 +1,36 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request) {
+interface ExecuteRequest {
+  instruction: string;
+  api_key: string;
+}
+
+interface AnthropicMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+interface AnthropicResponse {
+  content: Array<{
+    text: string;
+    type: 'text';
+  }>;
+}
+
+interface AnthropicErrorResponse {
+  error?: {
+    message: string;
+  };
+}
+
+interface ExecuteResponse {
+  message: string;
+  tool_outputs: any[]; // TODO: Define specific tool output types
+}
+
+export async function POST(request: NextRequest) {
   try {
-    const { instruction, api_key } = await request.json();
+    const { instruction, api_key } = await request.json() as ExecuteRequest;
 
     if (!instruction || !api_key) {
       return NextResponse.json(
@@ -20,7 +48,7 @@ export async function POST(request) {
         'anthropic-version': '2024-01-01'
       },
       body: JSON.stringify({
-        messages: [{ role: 'user', content: instruction }],
+        messages: [{ role: 'user', content: instruction }] as AnthropicMessage[],
         model: 'claude-3-sonnet-20240229',
         max_tokens: 1024,
         system: "You are a helpful AI assistant that can control the user's computer. You can execute commands and provide feedback."
@@ -28,25 +56,25 @@ export async function POST(request) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorData = await response.json().catch(() => ({} as AnthropicErrorResponse));
       console.error('Anthropic API Error:', errorData);
       throw new Error(errorData.error?.message || 'Failed to get response from Anthropic API');
     }
 
-    const data = await response.json();
+    const data = await response.json() as AnthropicResponse;
     
     // Process the response and extract relevant information
     const message = data.content[0].text;
-    const tool_outputs = []; // You'll need to implement tool execution logic here
+    const tool_outputs: any[] = []; // TODO: Implement tool execution logic
 
     return NextResponse.json({
       message,
       tool_outputs
-    });
+    } as ExecuteResponse);
   } catch (error) {
     console.error('Error executing command:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to execute command' },
+      { error: error instanceof Error ? error.message : 'Failed to execute command' },
       { status: 500 }
     );
   }
