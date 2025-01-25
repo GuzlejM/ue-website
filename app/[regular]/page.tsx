@@ -8,6 +8,7 @@ import { getRegularPage, getSinglePage } from "@lib/contentParser";
 import Ai from "@layouts/Ai";
 import AgentChat from "@layouts/AgentChat";
 
+// Base interfaces
 interface RegularPageParams {
   params: {
     regular: string;
@@ -22,6 +23,10 @@ interface RegularPageFrontmatter {
   noindex?: boolean;
   canonical?: string;
   layout?: string;
+  info?: any;
+  plans?: any;
+  call_to_action?: any;
+  faqs?: any;
 }
 
 interface RegularPageData {
@@ -29,10 +34,64 @@ interface RegularPageData {
   content: string;
 }
 
+// Layout-specific interfaces
+interface NotFoundData {
+  frontmatter: {
+    title: string;
+  };
+  content: string;
+}
+
+interface ContactData {
+  frontmatter: {
+    title: string;
+    info: {
+      title: string;
+      description: string;
+      contacts: string[];
+    };
+  };
+}
+
+interface PricingData {
+  frontmatter: {
+    title: string;
+    plans: any[];
+    call_to_action: any;
+  };
+}
+
+interface FaqData {
+  frontmatter: {
+    title: string;
+    faqs: any[];
+  };
+}
+
+interface AiData {
+  frontmatter: {
+    title: string;
+    faqs: any[];
+  };
+}
+
+interface AgentChatData {
+  frontmatter: {
+    title: string;
+  };
+}
+
+interface DefaultData {
+  frontmatter: {
+    title: string;
+  };
+  content: string;
+}
+
 const RegularPages = async ({ params }: RegularPageParams) => {
   const { regular } = params;
   const regularPageData = await getRegularPage(regular);
-  const { title, meta_title, description, image, noindex, canonical, layout } =
+  const { title, meta_title, description, image, noindex, canonical, layout, info, plans, call_to_action, faqs } =
     regularPageData.frontmatter;
   const { content } = regularPageData;
 
@@ -47,19 +106,50 @@ const RegularPages = async ({ params }: RegularPageParams) => {
         canonical={canonical}
       />
       {layout === "404" ? (
-        <NotFound data={regularPageData} />
+        <NotFound data={{
+          frontmatter: { title },
+          content
+        } as NotFoundData} />
       ) : layout === "contact" ? (
-        <Contact data={regularPageData} />
+        <Contact data={{
+          frontmatter: {
+            title,
+            info: info || { title: "", description: "", contacts: [] }
+          }
+        } as ContactData} />
       ) : layout === "pricing" ? (
-        <Pricing data={regularPageData} />
+        <Pricing data={{
+          frontmatter: {
+            title,
+            plans: plans || [],
+            call_to_action: call_to_action || {}
+          }
+        } as PricingData} />
       ) : layout === "faq" ? (
-        <Faq data={regularPageData} />
+        <Faq data={{
+          frontmatter: {
+            title,
+            faqs: faqs || []
+          }
+        } as FaqData} />
       ) : layout === "ai" ? (
-        <Ai data={regularPageData} />
+        <Ai data={{
+          frontmatter: {
+            title,
+            faqs: faqs || []
+          }
+        } as AiData} />
       ) : layout === "agent" ? (
-        <AgentChat data={regularPageData} />
+        <AgentChat data={{
+          frontmatter: {
+            title
+          }
+        } as AgentChatData} />
       ) : (
-        <Default data={regularPageData} />
+        <Default data={{
+          frontmatter: { title },
+          content
+        } as DefaultData} />
       )}
     </>
   );

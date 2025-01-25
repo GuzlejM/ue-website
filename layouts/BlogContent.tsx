@@ -1,7 +1,7 @@
 "use client";
 
-import { useTheme } from "../../../context/ThemeContext";
-import PostSingle from "@layouts/PostSingle";
+import { useTheme } from "../context/ThemeContext";
+import PostSingle from "./PostSingle";
 
 interface BlogContentProps {
   frontmatter: {

@@ -1,7 +1,7 @@
 import Share from "@components/Share";
-import dateFormat from "@lib/utils/dateFormat";
+import dateFormat from "../lib/utils/dateFormat";
 import { markdownify } from "@lib/utils/textConverter";
-import shortcodes from "@shortcodes/all";
+import shortcodes from "@layouts/shortcodes/all";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import { Theme } from "@context/ThemeContext";
@@ -23,7 +23,7 @@ interface PostSingleProps {
 
 const PostSingle: React.FC<PostSingleProps> = ({ frontmatter, content, theme }) => {
   let { description, title, date, image, categories } = frontmatter;
-  description = description ? description : content.slice(0, 120);
+  description = description || (typeof content === 'string' ? content.slice(0, 120) : '');
 
   return (
     <>
@@ -54,7 +54,6 @@ const PostSingle: React.FC<PostSingleProps> = ({ frontmatter, content, theme }) 
               <MDXRemote {...content} components={shortcodes} />
             </div>
             <Share
-              className="share-icons"
               title={title}
               description={description}
               theme={theme}

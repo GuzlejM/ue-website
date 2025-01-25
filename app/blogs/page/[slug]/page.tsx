@@ -1,16 +1,28 @@
-import Pagination from "@components/Pagination";
 import config from "@config/config.json";
 import SeoMeta from "@layouts/SeoMeta";
 import { getListPage, getSinglePage } from "@lib/contentParser";
 import { markdownify } from "@lib/utils/textConverter";
-import Posts from "@partials/Posts";
-import { Theme } from "@context/ThemeContext";
+import BlogPaginationContent from "./BlogPaginationContent";
 
 const { blog_folder } = config.settings;
 
 interface BlogPost {
   frontmatter: {
     date: string;
+    title: string;
+    description?: string;
+    image?: string;
+    categories?: string[];
+    [key: string]: any;
+  };
+  slug: string;
+  content: string;
+}
+
+interface SinglePageData {
+  frontmatter: {
+    date?: string;
+    title?: string;
     [key: string]: any;
   };
   slug: string;
@@ -23,21 +35,16 @@ interface BlogPaginationParams {
   };
 }
 
-interface BlogPaginationContentProps {
-  title: string;
-  currentPosts: BlogPost[];
-  totalPages: number;
-  currentPage: number;
-}
-
 // blog pagination
 const BlogPagination = async ({ params }: BlogPaginationParams) => {
   const currentPage = parseInt((params && params.slug) || "1");
   const { pagination } = config.settings;
-  const posts = await getSinglePage(`content/${blog_folder}`).sort(
-    (post1: BlogPost, post2: BlogPost) =>
-      new Date(post2.frontmatter.date).getTime() - new Date(post1.frontmatter.date).getTime()
-  );
+  const posts = (await getSinglePage(`content/${blog_folder}`))
+    .filter((post: SinglePageData) => post.frontmatter.date) // Filter out posts without dates
+    .sort((post1: SinglePageData, post2: SinglePageData) =>
+      new Date(post2.frontmatter.date!).getTime() - new Date(post1.frontmatter.date!).getTime()
+    ) as BlogPost[]; // Type assertion after filtering
+
   const postIndex = await getListPage(`content/${blog_folder}/_index.md`);
   
   const indexOfLastPost = currentPage * pagination;
@@ -45,7 +52,7 @@ const BlogPagination = async ({ params }: BlogPaginationParams) => {
   const totalPages = Math.ceil(posts.length / pagination);
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const { frontmatter } = postIndex;
-  const { title } = frontmatter;
+  const { title = "Blog" } = frontmatter; // Provide default title
 
   return <BlogPaginationContent 
     title={title}
@@ -55,42 +62,10 @@ const BlogPagination = async ({ params }: BlogPaginationParams) => {
   />;
 };
 
-export default BlogPagination;
-
-// Client component wrapper
-"use client";
-
-import { useTheme } from "../../../../context/ThemeContext";
-
-const BlogPaginationContent: React.FC<BlogPaginationContentProps> = ({ 
-  title, 
-  currentPosts, 
-  totalPages, 
-  currentPage 
-}) => {
-  const { theme } = useTheme();
-  
-  return (
-    <section className={`services-section ${theme === 'dark' ? 'bg-darkmode text-white' : 'bg-light text-dark'}`}>
-      <div className="container">
-        <h1 className={`text-center mb-8 ${theme === 'dark' ? 'text-white' : 'text-dark'}`}>
-          {title}
-        </h1>
-        <Posts posts={currentPosts} />
-        <Pagination
-          section={blog_folder}
-          totalPages={totalPages}
-          currentPage={currentPage}
-        />
-      </div>
-    </section>
-  );
-};
-
 // get blog pagination slug
 export const generateStaticParams = async () => {
   const getAllSlug = await getSinglePage(`content/${blog_folder}`);
-  const allSlug = getAllSlug.map((item: BlogPost) => item.slug);
+  const allSlug = (getAllSlug as BlogPost[]).map(item => item.slug);
   const { pagination } = config.settings;
   const totalPages = Math.ceil(allSlug.length / pagination);
   let paths = [];
@@ -102,4 +77,6 @@ export const generateStaticParams = async () => {
   }
 
   return paths;
-}; 
+};
+
+export default BlogPagination; 
