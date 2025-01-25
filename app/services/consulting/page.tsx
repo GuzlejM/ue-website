@@ -1,10 +1,84 @@
 "use client";
 
+import React from 'react';
 import { motion } from "framer-motion";
 import { useTheme } from "../../../context/ThemeContext";
 
-const ConsultingPage = () => {
+interface Service {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface Phase {
+  step: string;
+  title: string;
+  description: string;
+}
+
+const ConsultingPage: React.FC = () => {
   const { theme } = useTheme();
+
+  const services: Service[] = [
+    {
+      title: "AI Strategy Development",
+      description: "Create a comprehensive AI roadmap aligned with your business objectives.",
+      icon: "🎯"
+    },
+    {
+      title: "Technology Assessment",
+      description: "Evaluate and recommend the best AI technologies for your needs.",
+      icon: "🔍"
+    },
+    {
+      title: "Process Optimization",
+      description: "Identify opportunities for AI-driven process improvements.",
+      icon: "⚡"
+    },
+    {
+      title: "Risk Management",
+      description: "Assess and mitigate risks associated with AI implementation.",
+      icon: "🛡️"
+    },
+    {
+      title: "Change Management",
+      description: "Guide your organization through AI transformation.",
+      icon: "🔄"
+    },
+    {
+      title: "ROI Analysis",
+      description: "Measure and optimize the return on AI investments.",
+      icon: "📊"
+    }
+  ];
+
+  const phases: Phase[] = [
+    {
+      step: "1",
+      title: "Discovery & Assessment",
+      description: "Understanding your current state, challenges, and objectives."
+    },
+    {
+      step: "2",
+      title: "Strategy Development",
+      description: "Creating a tailored AI implementation strategy and roadmap."
+    },
+    {
+      step: "3",
+      title: "Solution Design",
+      description: "Designing AI solutions that address your specific needs."
+    },
+    {
+      step: "4",
+      title: "Implementation Support",
+      description: "Guiding you through the implementation process."
+    },
+    {
+      step: "5",
+      title: "Optimization & Growth",
+      description: "Continuous improvement and scaling of AI solutions."
+    }
+  ];
   
   return (
     <div className={`services-section ${theme}`}>
@@ -24,38 +98,7 @@ const ConsultingPage = () => {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-          {[
-            {
-              title: "AI Strategy Development",
-              description: "Create a comprehensive AI roadmap aligned with your business objectives.",
-              icon: "🎯"
-            },
-            {
-              title: "Technology Assessment",
-              description: "Evaluate and recommend the best AI technologies for your needs.",
-              icon: "🔍"
-            },
-            {
-              title: "Process Optimization",
-              description: "Identify opportunities for AI-driven process improvements.",
-              icon: "⚡"
-            },
-            {
-              title: "Risk Management",
-              description: "Assess and mitigate risks associated with AI implementation.",
-              icon: "🛡️"
-            },
-            {
-              title: "Change Management",
-              description: "Guide your organization through AI transformation.",
-              icon: "🔄"
-            },
-            {
-              title: "ROI Analysis",
-              description: "Measure and optimize the return on AI investments.",
-              icon: "📊"
-            }
-          ].map((service, index) => (
+          {services.map((service, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -81,33 +124,7 @@ const ConsultingPage = () => {
         <div className="max-w-4xl mx-auto mb-24">
           <h2 className={`section-title ${theme} text-center mb-12`}>Our Consulting Approach</h2>
           <div className="space-y-8">
-            {[
-              {
-                step: "1",
-                title: "Discovery & Assessment",
-                description: "Understanding your current state, challenges, and objectives."
-              },
-              {
-                step: "2",
-                title: "Strategy Development",
-                description: "Creating a tailored AI implementation strategy and roadmap."
-              },
-              {
-                step: "3",
-                title: "Solution Design",
-                description: "Designing AI solutions that address your specific needs."
-              },
-              {
-                step: "4",
-                title: "Implementation Support",
-                description: "Guiding you through the implementation process."
-              },
-              {
-                step: "5",
-                title: "Optimization & Growth",
-                description: "Continuous improvement and scaling of AI solutions."
-              }
-            ].map((phase, index) => (
+            {phases.map((phase, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
